@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>NOTES</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body>
+        <h1 id="notes">NOTES</h1>
+<hr>
+<ul>
+<li><a href="#notes">NOTES</a>
+<ul>
+<li><a href="#convert-btw-uint32--float-without-much-data-loss">Convert btw UINT32 &amp; FLOAT without much data loss</a></li>
+<li><a href="#difference-between-const-char-p-char--const-p-and-const-char--const-p">Difference between const char *p, char * const p and const char * const p</a>
+<ul>
+<li><a href="#const-keyword-applies-to-whatever-is-immediately-to-its-left-if-there-is-nothing-to-its-left-it-applies-to-whatever-is-immediately-to-its-right">const keyword applies to whatever is immediately to its left. If there is nothing to its left, it applies to whatever is immediately to its right.</a>
+<ul>
+<li><a href="#note-there-is-no-difference-between-const-char-p-and-char-const-p-as-both-are-pointer-to-a-const-char-and-position-of--asterik-is-also-same">NOTE: There is no difference between const char *p and char const *p as both are pointer to a const char and position of * (asterik) is also same.</a></li>
+<li><a href="#note-char-const--const-ptr-is-same-as-const-char-const-ptr">NOTE: char const * const ptr is same as const char *const ptr.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#difference-between-int-var-and-int-var">Difference between int* var and int *var</a>
+<ul>
+<li><a href="#prefer-int-i-because-the-parser-attaches-the-star-to-the-variable-and-not-the-type">prefer int *i; because the parser attaches the star to the variable, and not the type.</a></li>
+</ul>
+</li>
+<li><a href="#sizet-type">size_t type</a></li>
+<li><a href="#to-convert-the-decimal-into-floating-point-we-have-3-elements-in-a-32-bit-floating-point-representation">To convert the decimal into floating point, we have 3 elements in a 32-bit floating point representation:</a>
+<ul>
+<li><a href="#i-sign-msb">i) Sign (MSB)</a></li>
+<li><a href="#ii-exponent-8-bits-after-msb">ii) Exponent (8 bits after MSB)</a></li>
+<li><a href="#iii-mantissa-remaining-23-bits">iii) Mantissa (Remaining 23 bits)</a></li>
+</ul>
+</li>
+<li><a href="#to-convert-the-decimal-into-floating-point-we-have-3-elements-in-a-32-bit-floating-point-representation-1">To convert the decimal into floating point, we have 3 elements in a 32-bit floating point representation:</a>
+<ul>
+<li><a href="#i-sign-msb-1">i) Sign (MSB)</a></li>
+<li><a href="#ii-exponent-8-bits-after-msb-1">ii) Exponent (8 bits after MSB)</a></li>
+<li><a href="#iii-mantissa-remaining-23-bits-1">iii) Mantissa (Remaining 23 bits)</a></li>
+</ul>
+</li>
+<li><a href="#cplusplus-macro">__cplusplus macro</a></li>
+<li><a href="#extern-c-with-cplusplus-macro">extern C with __cplusplus macro</a>
+<ul>
+<li><a href="#example">Example:</a></li>
+</ul>
+</li>
+<li><a href="#static-variables">static variables</a></li>
+<li><a href="#the-c-language-is-pass-by-value-without-exception-passing-a-pointer-as-a-parameter-does-not-mean-pass-by-reference">The C language is pass-by-value without exception. Passing a pointer as a parameter does not mean pass-by-reference.</a>
+<ul>
+<li><a href="#a-function-is-not-able-to-change-the-actual-parameters-value">A function is not able to change the actual parameters value.</a></li>
+</ul>
+</li>
+<li><a href="#header-and-source-files-in-c">Header and source files in C</a>
+<ul>
+<li><a href="#converting-c-source-code-files-to-an-executable-program-is-normally-done-in-two-steps-compiling-and-linking">Converting C source code files to an executable program is normally done in two steps: compiling and linking.</a></li>
+<li><a href="#linkage">Linkage</a></li>
+</ul>
+</li>
+<li><a href="#location-of-local-pointer">Location of local pointer</a></li>
+<li><a href="#how-to-change-a-pointer-inside-a-function-addr-it-points-not-value--pointer-to-pointer">How to change a pointer inside a function (addr. it points, not value) / pointer to pointer</a>
+<ul>
+<li><a href="#use-pointer-to-pointer-double-pointer">use pointer to pointer (double pointer)</a></li>
+<li><a href="#also">Also,</a></li>
+</ul>
+</li>
+<li><a href="#realloc">realloc()</a></li>
+<li><a href="#finding-element-size-of-arrays-in-functions">Finding element size of arrays in functions</a>
+<ul>
+<li><a href="#note">NOTE:</a></li>
+</ul>
+</li>
+<li><a href="#difference-between-char-str10--%22string%22-and-char-str--%22string%22">Difference between <code>char str[10] = &quot;string&quot;</code> and <code>char *str = &quot;string&quot;</code></a>
+<ul>
+<li><a href="#char-str10--%22string%22"><code>char str[10] = &quot;string&quot;</code></a></li>
+<li><a href="#char-str--%22string%22"><code>char *str = &quot;string&quot;</code></a></li>
+</ul>
+</li>
+<li><a href="#to-do">TO DO:</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="convert-btw-uint32--float-without-much-data-loss">Convert btw UINT32 &amp; FLOAT without much data loss</h2>
+<pre><code class="language-C"><div><span class="hljs-keyword">uint32_t</span> FloatToUint(<span class="hljs-keyword">float</span> n) {
+   <span class="hljs-keyword">return</span> (<span class="hljs-keyword">uint32_t</span>)(*(<span class="hljs-keyword">uint32_t</span>*)&amp;n);
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">UintToFloat</span><span class="hljs-params">(<span class="hljs-keyword">uint32_t</span> n)</span> </span>{
+   <span class="hljs-keyword">return</span> (<span class="hljs-keyword">float</span>)(*(<span class="hljs-keyword">float</span>*)&amp;n);
+}
+</div></code></pre>
+<h2 id="difference-between-const-char-p-char--const-p-and-const-char--const-p">Difference between const char *p, char * const p and const char * const p</h2>
+<h3 id="const-keyword-applies-to-whatever-is-immediately-to-its-left-if-there-is-nothing-to-its-left-it-applies-to-whatever-is-immediately-to-its-right">const keyword applies to whatever is immediately to its left. If there is nothing to its left, it applies to whatever is immediately to its right.</h3>
+<p><code>const char *ptr</code> : This is a pointer to a constant character. You cannot change the value pointed by ptr, but you can change the pointer itself. const char * is a (non-const) pointer to a const char.</p>
+<h4 id="note-there-is-no-difference-between-const-char-p-and-char-const-p-as-both-are-pointer-to-a-const-char-and-position-of--asterik-is-also-same">NOTE: There is no difference between const char *p and char const *p as both are pointer to a const char and position of * (asterik) is also same.</h4>
+<p><code>char *const ptr</code> : This is a constant pointer to non-constant character. You cannot change the pointer p, but can change the value pointed by ptr.</p>
+<p><code>const char * const ptr</code> : This is a constant pointer to constant character. You can neither change the value pointed by ptr nor the pointer ptr.</p>
+<h4 id="note-char-const--const-ptr-is-same-as-const-char-const-ptr">NOTE: char const * const ptr is same as const char *const ptr.</h4>
+<h2 id="difference-between-int-var-and-int-var">Difference between int* var and int *var</h2>
+<h4 id="prefer-int-i-because-the-parser-attaches-the-star-to-the-variable-and-not-the-type">prefer int *i; because the parser attaches the star to the variable, and not the type.</h4>
+<p>This only becomes meaningful when you try to define two variables on the line. Regardless of how you write it:</p>
+<pre><code class="language-C"><div><span class="hljs-keyword">int</span>* i,j;
+<span class="hljs-keyword">int</span>*i,j;
+<span class="hljs-keyword">int</span> *i,j;`
+</div></code></pre>
+<p>in each of those, i is a pointer to an int, while j is just an int. The last syntax makes that clearer</p>
+<h2 id="sizet-type">size_t type</h2>
+<p>It is guaranteed to be big enough to contain the size of the biggest object the host system can handle. Basically the maximum permissible size is dependent on the compiler; if the compiler is 32 bit then it is simply a typedef(i.e., alias) for unsigned int but if the compiler is 64 bit then it would be a typedef for unsigned long long. The size_t data type is never negative.</p>
+<h2 id="to-convert-the-decimal-into-floating-point-we-have-3-elements-in-a-32-bit-floating-point-representation">To convert the decimal into floating point, we have 3 elements in a 32-bit floating point representation:</h2>
+<h4 id="i-sign-msb">i) Sign (MSB)</h4>
+<h4 id="ii-exponent-8-bits-after-msb">ii) Exponent (8 bits after MSB)</h4>
+<h4 id="iii-mantissa-remaining-23-bits">iii) Mantissa (Remaining 23 bits)</h4>
+<p><code>Sign bit</code> is the first bit of the binary representation. '1' implies negative number and '0' implies positive number.
+Example: To convert -17 into 32-bit floating point representation Sign bit = 1</p>
+<p><code>Exponent</code> is decided by the nearest smaller or equal to 2n number. For 17, 16 is the nearest 2n. Hence the exponent of 2 will be 4 since 24 = 16. 127 is the unique number for 32 bit floating point representation. It is known as bias. It is determined by 2k-1 -1 where 'k' is the number of bits in exponent field.
+Thus bias = 127 for 32 bit. (28-1 -1 = 128-1 = 127)</p>
+<p>Now, 127 + 4 = 131 i.e. 10000011 in binary representation.</p>
+<p><code>Mantissa</code>: 17 in binary = 10001.
+Move the binary point so that there is only one bit from the left. Adjust the exponent of 2 so that the value does not change. This is normalizing the number. 1.0001 x 24. Now, consider the fractional part and represented as 23 bits by adding zeros.</p>
+<p>00010000000000000000000</p>
+<p>Thus the floating point representation of -17 is 1 10000011 00010000000000000000000</p>
+<h2 id="to-convert-the-decimal-into-floating-point-we-have-3-elements-in-a-32-bit-floating-point-representation-1">To convert the decimal into floating point, we have 3 elements in a 32-bit floating point representation:</h2>
+<h4 id="i-sign-msb-1">i) Sign (MSB)</h4>
+<h4 id="ii-exponent-8-bits-after-msb-1">ii) Exponent (8 bits after MSB)</h4>
+<h4 id="iii-mantissa-remaining-23-bits-1">iii) Mantissa (Remaining 23 bits)</h4>
+<p><code>Sign</code> bit is the first bit of the binary representation. '1' implies negative number and '0' implies positive number.
+Example: To convert -17 into 32-bit floating point representation Sign bit = 1</p>
+<p><code>Exponent</code> is decided by the nearest smaller or equal to 2n number. For 17, 16 is the nearest 2n. Hence the exponent of 2 will be 4 since 24 = 16. 127 is the unique number for 32 bit floating point representation. It is known as bias. It is determined by 2k-1 -1 where 'k' is the number of bits in exponent field.
+Thus bias = 127 for 32 bit. (28-1 -1 = 128-1 = 127)</p>
+<p>Now, 127 + 4 = 131 i.e. 10000011 in binary representation.</p>
+<p><code>Mantissa</code>: 17 in binary = 10001.
+Move the binary point so that there is only one bit from the left. Adjust the exponent of 2 so that the value does not change. This is normalizing the number. 1.0001 x 24. Now, consider the fractional part and represented as 23 bits by adding zeros.</p>
+<p>00010000000000000000000</p>
+<p>Thus the floating point representation of -17 is 1 10000011 00010000000000000000000</p>
+<h2 id="cplusplus-macro">__cplusplus macro</h2>
+<p>The __cplusplus preprocessor macro is defined if the compilation unit is compiled with a C++ compiler. If defined, its value corresponds to the C++ standard that the compiler uses to compile a compilation unit.</p>
+<h2 id="extern-c-with-cplusplus-macro">extern C with __cplusplus macro</h2>
+<p>extern &quot;C&quot; is meant to be recognized by a C++ compiler and to notify the compiler that the  function is (or to be) compiled in C style.</p>
+<h4 id="example">Example:</h4>
+<pre><code class="language-C"><div><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus</span>
+<span class="hljs-keyword">extern</span> <span class="hljs-string">"C"</span> {
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+
+\\ statements to be compiled in C style
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus</span>
+}
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span> </span>
+</div></code></pre>
+<h2 id="static-variables">static variables</h2>
+<p>Static variables have a property of preserving their value even after they are out of their scope</p>
+<p>Static global variables and functions are also possible in C/C++. The purpose of these is to limit scope of a variable or function to a file.</p>
+<p>Static variables should not be declared inside structure. The reason is C compiler requires the entire structure elements to be placed together (i.e.) memory allocation for structure members should be contiguous. It is possible to declare structure inside the function (stack segment) or allocate memory dynamically(heap segment) or it can be even global (BSS or data segment). Whatever might be the case, all structure members should reside in the same memory segment because the value for the structure element is fetched by counting the offset of the element from the beginning address of the structure. Separating out one member alone to data segment defeats the purpose of static variable and it is possible to have an entire structure as static.</p>
+<p>In C, functions are global by default. The “static” keyword before a function name makes it static.</p>
+<p>Unlike global functions in C, access to static functions is restricted to the file where they are declared. Therefore, when we want to restrict access to functions, we make them static. Another reason for making functions static can be reuse of the same function name in other files.</p>
+<h2 id="the-c-language-is-pass-by-value-without-exception-passing-a-pointer-as-a-parameter-does-not-mean-pass-by-reference">The C language is pass-by-value without exception. Passing a pointer as a parameter does not mean pass-by-reference.</h2>
+<h4 id="a-function-is-not-able-to-change-the-actual-parameters-value">A function is not able to change the actual parameters value.</h4>
+<pre><code class="language-C"><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">function2</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *param)</span> </span>{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"param's address %d\n"</span>, param);
+    param = <span class="hljs-literal">NULL</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-keyword">int</span> variable = <span class="hljs-number">111</span>;
+    <span class="hljs-keyword">int</span> *ptr = &amp;variable;
+
+    function2(ptr);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"ptr's address %d\n"</span>, ptr);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<p>The result will be that the two addresses are equal</p>
+<p>Example result:</p>
+<pre><code><code><div>param's address -1846583468
+ptr's address -1846583468
+</div></code></code></pre>
+<h2 id="header-and-source-files-in-c">Header and source files in C</h2>
+<h4 id="converting-c-source-code-files-to-an-executable-program-is-normally-done-in-two-steps-compiling-and-linking">Converting C source code files to an executable program is normally done in two steps: compiling and linking.</h4>
+<p><strong>First, the compiler converts the source code to object files  (*.o)</strong>
+<strong>Then, the linker takes these object files, together with statically-linked libraries and creates an executable program.</strong></p>
+<p>In the first step, the compiler takes a compilation unit, which is normally a preprocessed source file (so, a source file with the contents of all the headers that it #includes) and converts that to an object file.</p>
+<p>In each compilation unit, all the functions that are used must be declared, to let the compiler know that the function exists and what its arguments are. In your example, the declaration of the function returnSeven is in the header file header.h. When you compile main.c, you include the header with the declaration so that the compiler knows that returnSeven exists when it compiles main.c.</p>
+<p>When the linker does its job, it needs to find the definition of each function. Each function has to be defined exactly once in one of the object files - if there are multiple object files that contain the definition of the same function, the linker will stop with an error.</p>
+<h3 id="linkage">Linkage</h3>
+<p>There is <strong>external linkage</strong> and <strong>internal linkage</strong>.</p>
+<p>By default, functions have <strong>external linkage</strong>, which means that the compiler makes these functions visible to the linker. If you make a function <strong><em>static</em></strong>, it has <strong>internal linkage</strong> - it is only visible inside the compilation unit in which it is defined (the linker won't know that it exists). This can be useful for functions that do something internally in a source file and that you want to hide from the rest of the program.</p>
+<h2 id="location-of-local-pointer">Location of local pointer</h2>
+<pre><code class="language-C"><div><span class="hljs-function"><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* <span class="hljs-title">func</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">char</span> *ptr = <span class="hljs-string">"OK"</span>;
+    <span class="hljs-keyword">return</span> ptr;
+}
+</div></code></pre>
+<p>If you are referring to the location where the string <code>OK</code> is stored, then its stored in the <strong>code section</strong> of the memory and ptr is stored in the <strong>stack</strong>.</p>
+<p>And the location of <code>OK</code> in code section is still accessible as its address is being returned by <code>func()</code>.</p>
+<p>Also, the code section is <strong>read only</strong>. That is the reason why other answers suggested to make your function declaration as:</p>
+<p><code>const char * func ()</code></p>
+<h2 id="how-to-change-a-pointer-inside-a-function-addr-it-points-not-value--pointer-to-pointer">How to change a pointer inside a function (addr. it points, not value) / pointer to pointer</h2>
+<h3 id="use-pointer-to-pointer-double-pointer">use pointer to pointer (double pointer)</h3>
+<p>Use <code>\*\*</code> when you want to preserve (OR retain change in) the Memory-Allocation or Assignment even outside of a function call.</p>
+<pre><code class="language-C"><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">allocate</span><span class="hljs-params">(<span class="hljs-keyword">int</span>** p)</span>
+</span>{
+  *p = (<span class="hljs-keyword">int</span>*)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">int</span>* p = <span class="hljs-literal">NULL</span>;
+  allocate(&amp;p);
+  *p = <span class="hljs-number">42</span>;
+  <span class="hljs-built_in">free</span>(p);
+}
+</div></code></pre>
+<h3 id="also">Also,</h3>
+<p>If you want to have a list of characters (a word), you can use <code>char *word</code></p>
+<p>If you want a list of words (a sentence), you can use <code>char **sentence</code></p>
+<p>If you want a list of sentences (a monologue), you can use <code>char ***monologue</code></p>
+<p>so on...</p>
+<h2 id="realloc">realloc()</h2>
+<p><strong>Size of dynamically allocated memory can be changed by using realloc().</strong></p>
+<p><code>void *realloc(void *ptr, size_t size); </code></p>
+<p><code>realloc</code> deallocates the old object pointed to by ptr and returns a pointer to a new object that has the size specified by size. The contents of the new object is identical to that of the old object prior to deallocation, up to the lesser of the new and old sizes. Any bytes in the new object beyond the size of the old object have indeterminate values.</p>
+<p>The point to note is that <code>realloc()</code> should only be used for dynamically allocated memory.</p>
+<h2 id="finding-element-size-of-arrays-in-functions">Finding element size of arrays in functions</h2>
+<p><code>sizeof( a ) / sizeof( a[0] )</code></p>
+<h4 id="note">NOTE:</h4>
+<p>Parameters declared like arrays are adjusted to pointers to the type of the array element.</p>
+<pre><code class="language-C"><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">( <span class="hljs-keyword">int</span> a[<span class="hljs-number">10</span>] )</span>
+</span>{
+    <span class="hljs-keyword">size_t</span> n = <span class="hljs-keyword">sizeof</span>( a ) / <span class="hljs-keyword">sizeof</span>( a[<span class="hljs-number">0</span>] );
+    <span class="hljs-comment">//...</span>
+}
+</div></code></pre>
+<p><strong>SAME AS</strong></p>
+<pre><code class="language-C"><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">( <span class="hljs-keyword">int</span> *a )</span></span>;
+</div></code></pre>
+<p>and within the function in expression</p>
+<p><code>size_t n = sizeof( a ) / sizeof( a[0] );</code> parameter a is just a pointer.</p>
+<p>Pointers do not keep an information about whether they point to a single object or the first object of some array.</p>
+<p>In this case you should declare the function with second parameter that specifies the number of elements in the array.</p>
+<h2 id="difference-between-char-str10--%22string%22-and-char-str--%22string%22">Difference between <code>char str[10] = &quot;string&quot;</code> and <code>char *str = &quot;string&quot;</code></h2>
+<h4 id="char-str10--%22string%22"><code>char str[10] = &quot;string&quot;</code></h4>
+<ul>
+<li><code>str</code> is an array</li>
+<li><code>sizeof(str)</code> is 10 bytes</li>
+<li><code>str</code> and <code>&amp;str</code> are same                                       // check &amp;str[]</li>
+<li>&quot;string&quot; is stored in the stack section of the memory</li>
+<li><code>str</code> = &quot;hello&quot; is not possible</li>
+<li><code>str++</code> is invalid (possible inside another func.)              // check</li>
+</ul>
+<h4 id="char-str--%22string%22"><code>char *str = &quot;string&quot;</code></h4>
+<ul>
+<li><code>str</code> is a pointer variable</li>
+<li><code>sizeof(p)</code> =  depends on the system, 4 bytes for 32 bits systems</li>
+<li><code>str</code> and <code>&amp;str</code> are not same</li>
+<li><code>str</code> is stored in stack but &quot;string&quot; is stored in the code section of memory</li>
+<li><code>str</code> = &quot;another string&quot; possible</li>
+<li><code>str++</code> is valid</li>
+</ul>
+<h2 id="to-do">TO DO:</h2>
+
+    </body>
+    </html>
