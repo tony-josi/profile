@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link rel="shortcut icon" type="image/png" href="../fav.png" />
+
+    <meta charset="UTF-8">
+    <title>C NOTES</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .task-list-item {
+            list-style-type: none;
+        }
+
+        .task-list-item-checkbox {
+            margin-left: -20px;
+            vertical-align: middle;
+        }
+    </style>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div style="padding-left: 60px; padding-right: 60px;">
+
+    <h1 id="c-notes-2">C NOTES 2</h1>
+    <hr />
+    <ul>
+        <li><a href="#c-notes-2">C NOTES 2</a><br /></li>
+        <li>
+            <p><a href="#storage-duration--linkage">Storage duration &amp; Linkage</a></p>
+            <ul>
+                <li><a href="#storage-duration">Storage duration</a><br /></li>
+                <li><a href="#linkage">Linkage</a><br /></li>
+                <li>
+                    <p><a href="#example">Example:</a></p>
+                    <ul>
+                        <li><a href="#op">OP:</a><br /></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="#type-qualifier">type qualifier</a><br /></li>
+        <li><a href="#restrict-keyword">restrict keyword</a><br /></li>
+        <li><a href="#why-is-the-use-of-alloca-not-considered-good-practice">Why is the use of alloca() not considered
+                good
+                practice?</a><br /></li>
+        <li><a href="#whats-the-difference-between-a-vla-and-dynamic-memory-allocation-via-malloc">What's the difference
+                between a VLA and dynamic memory allocation via malloc?</a><br /></li>
+        <li><a href="#anonymous-structure">Anonymous Structure</a><br /></li>
+        <li><a href="#forward-declaration">Forward declaration</a><br /></li>
+        <li><a href="#incomplete-types">Incomplete types</a><br /></li>
+        <li><a href="#storage-classes-in-c">Storage Classes in C</a><br /></li>
+        <li>
+            <p><a href="#type-qualifiers">Type Qualifiers</a></p>
+            <ul>
+                <li><a href="#example-1">Example</a><br /></li>
+                <li><a href="#uses-of-volatile">Uses of volatile</a><br /></li>
+            </ul>
+        </li>
+        <li><a href="#conditional-inclusion">Conditional inclusion</a><br /></li>
+        <li>
+            <p><a href="#define-macros">#define macros</a></p>
+            <ul>
+                <li><a href="#and--operators"># and ## operators</a><br /></li>
+            </ul>
+        </li>
+        <li><a href="#gcc--g-vs--g3-gdb-flag-what-is-the-difference-also-is-there-a-difference-between--g-and--ggdb">GCC
+                -g
+                vs -g3 GDB Flag: What is the Difference? Also is there a difference between -g and -ggdb?</a><br /></li>
+        <li><a href="#debug-flags-in-gcc">Debug flags in gcc</a><br /></li>
+        <li>
+            <p><a href="#weak-definitions">Weak Definitions</a></p>
+            <ul>
+                <li><a href="#example-usage">Example usage:</a></li>
+            </ul>
+        </li>
+    </ul>
+    <h2 id="storage-duration-linkage">Storage duration &amp; Linkage</h2>
+    <h3 id="storage-duration">Storage duration</h3>
+    <p>Every object has a property called storage duration, which limits the object lifetime. There are four kinds of
+        storage duration in C:</p>
+    <ul>
+        <li>
+            <p><code>automatic</code> storage duration. The storage is allocated when the block in which the object was
+                declared is entered and deallocated when it is exited by any means (goto, return, reaching the end). One
+                exception is the VLAs; their storage is allocated when the declaration is executed, not on block entry,
+                and
+                deallocated when the declaration goes out of scope, not than when the block is exited (since C99). If
+                the
+                block is entered recursively, a new allocation is performed for every recursion level. All function
+                parameters and non-static block-scope objects have this storage duration, as well as compound literals
+                used
+                at block scope.</p>
+        </li>
+        <li>
+            <p><code>static</code> storage duration. The storage duration is the entire execution of the program, and
+                the
+                value stored in the object is initialized only once, prior to main function. All objects declared static
+                and
+                all objects with either internal or external linkage that aren't declared <em>Thread</em>local (since
+                C11)
+                have this storage duration.</p>
+        </li>
+        <li>
+            <p><code>thread</code> storage duration. The storage duration is the entire execution of the thread in which
+                it
+                was created, and the value stored in the object is initialized when the thread is started. Each thread
+                has
+                its own, distinct, object. If the thread that executes the expression that accesses this object is not
+                the
+                thread that executed its initialization, the behavior is implementation-defined. All objects declared
+                <em>Thread</em>local have this storage duration.<br />(since C11)</p>
+        </li>
+        <li>
+            <p><code>allocated</code> storage duration. The storage is allocated and deallocated on request, using
+                dynamic
+                memory allocation functions.</p>
+        </li>
+    </ul>
+    <h3 id="linkage">Linkage</h3>
+    <p>Linkage refers to the ability of an identifier (variable or function) to be referred to in other scopes. If a
+        variable or function with the same identifier is declared in several scopes, but cannot be referred to from all
+        of
+        them, then several instances of the variable are generated. The following linkages are recognized:</p>
+    <ul>
+        <li>
+            <p><code>no linkage</code>. The identifier can be referred to only from the scope it is in. All function
+                parameters and all non-extern block-scope variables (including the ones declared static) have this
+                linkage.
+            </p>
+        </li>
+        <li>
+            <p><code>internal linkage</code>. The identifier can be referred to from all scopes in the current
+                translation
+                unit. All static file-scope identifiers (both functions and variables) have this linkage.</p>
+        </li>
+        <li>
+            <p><code>external linkage</code>. The identifier can be referred to from any other translation units in the
+                entire program. All non-static functions, all extern variables (unless earlier declared static), and all
+                file-scope non-static variables have this linkage.</p>
+        </li>
+    </ul>
+    <p>If the same identifier appears with both internal and external linkage in the same translation unit, the behavior
+        is
+        undefined. This is possible when tentative definitions are used.</p>
+    <p><a href="https://en.cppreference.com/w/c/language/storage_duration">refer</a></p>
+    <h4 id="example">Example:</h4>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+ 
+<span class="co">/* static storage duration */</span>
+<span class="dt">int</span> A;
+ 
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+    printf(<span class="st">&quot;&amp;A = %p</span><span class="ch">\n</span><span class="st">&quot;</span>, (<span class="dt">void</span>*)&amp;A);
+ 
+    <span class="co">/* automatic storage duration */</span>
+    <span class="dt">int</span> A = <span class="dv">1</span>;   <span class="co">// hides global A</span>
+    printf(<span class="st">&quot;&amp;A = %p</span><span class="ch">\n</span><span class="st">&quot;</span>, (<span class="dt">void</span>*)&amp;A);
+ 
+    <span class="co">/* allocated storage duration */</span>
+    <span class="dt">int</span> *ptr_1 = malloc(<span class="kw">sizeof</span>(<span class="dt">int</span>));   <span class="co">/* start allocated storage duration */</span>
+    printf(<span class="st">&quot;address of int in allocated memory = %p</span><span class="ch">\n</span><span class="st">&quot;</span>, (<span class="dt">void</span>*)ptr_1);
+    free(ptr_1);                        <span class="co">/* stop allocated storage duration  */</span>
+ 
+} </code></pre>
+    <h5 id="op">OP:</h5>
+    <pre class="sourceCode C"><code class="sourceCode c">&amp;A = <span class="bn">0x600ae4</span>
+&amp;A = <span class="bn">0x7fffc013de8c</span>
+address of <span class="dt">int</span> in allocated memory = <span class="bn">0x217bc30</span></code></pre>
+    <h2 id="type-qualifier">type qualifier</h2>
+    <p>Each individual type in the C type system has several qualified versions of that type, corresponding to one, two,
+        or
+        all three of the const, volatile, and, for pointers to object types, restrict qualifiers. This page describes
+        the
+        effects of the restrict qualifier.</p>
+    <h2 id="restrict-keyword">restrict keyword</h2>
+    <p>During each execution of a block in which a restricted pointer P is declared (typically each execution of a
+        function
+        body in which P is a function parameter), if some object that is accessible through P (directly or indirectly)
+        is
+        modified, by any means, then all accesses to that object (both reads and writes) in that block must occur
+        through P
+        (directly or indirectly), otherwise the behavior is undefined:</p>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">void</span> f(<span class="dt">int</span> n, <span class="dt">int</span> * <span class="dt">restrict</span> p, <span class="dt">int</span> * <span class="dt">restrict</span> q)
+{
+    <span class="kw">while</span>(n-- &gt; <span class="dv">0</span>)
+        *p++ = *q++; <span class="co">// none of the objects modified through *p is the same</span>
+                     <span class="co">// as any of the objects read through *q</span>
+                     <span class="co">// compiler free to optimize, vectorize, page map, etc.</span>
+}
+<span class="dt">void</span> g(<span class="dt">void</span>)
+{
+    <span class="kw">extern</span> <span class="dt">int</span> d[<span class="dv">100</span>];
+    f(<span class="dv">50</span>, d + <span class="dv">50</span>, d); <span class="co">// OK</span>
+    f(<span class="dv">50</span>, d + <span class="dv">1</span>, d); <span class="co">// Undefined behavior: d[1] is accessed through both p and q in f</span>
+}</code></pre>
+    <h2 id="why-is-the-use-of-alloca-not-considered-good-practice">Why is the use of alloca() not considered good
+        practice?
+    </h2>
+    <p>The answer is right there in the man page (at least on Linux):</p>
+    <blockquote>
+        <p>RETURN VALUE The alloca() function returns a pointer to the beginning of the allocated space. If the
+            allocation
+            causes stack overflow, program behaviour is undefined.</p>
+    </blockquote>
+    <p>Which isn't to say it should never be used. One of the OSS projects I work on uses it extensively, and as long as
+        you're not abusing it (alloca'ing huge values), it's fine. Once you go past the &quot;few hundred bytes&quot;
+        mark,
+        it's time to use malloc and friends, instead. You may still get allocation failures, but at least you'll have
+        some
+        indication of the failure instead of just blowing out the stack.</p>
+    <h2 id="whats-the-difference-between-a-vla-and-dynamic-memory-allocation-via-malloc">What's the difference between a
+        VLA
+        and dynamic memory allocation via malloc?</h2>
+    <ul>
+        <li>Case 1: In</li>
+    </ul>
+    <p><code>char Buffer[MAX_BUF];</code></p>
+    <p>Buffer is an array of size MAX_BUF. The allocation technique is called VLA.</p>
+    <ul>
+        <li>Case 2: In</li>
+    </ul>
+    <p><code>const int MAX_BUF = 1000;</code></p>
+    <p><code>char* Buffer = malloc(MAX_BUF);</code></p>
+    <p>Buffer is a pointer which is allocated a memory of size MAX_BUF which is 1000.</p>
+    <p>and, an array is not the same as a pointer, and C-FAQ has a Very Good collection detailing the reasons.</p>
+    <p>The major difference, in terms of usability and behaviour are:</p>
+    <ul>
+        <li>(1) is on stack, usually Note, while (2) is on heap, always.<br /></li>
+        <li>(1) has fixed size once allocated, (2) can be resized.<br /></li>
+        <li>(1) is allocated when the enclosing function is called and has the block scope OTOH, (2) is allocated memory
+            dynamically, at runtime and the returned memory has a lifetime which extends from the allocation until the
+            deallocation.<br /></li>
+        <li>(1) allocated memory need not be managed by programmer, while in (2) all malloc()d memory should be free().
+        </li>
+    </ul>
+    <h2 id="anonymous-structure">Anonymous Structure</h2>
+    <p>Similar to union, an unnamed member of a struct whose type is a struct without name is known as anonymous struct.
+        Every member of an anonymous struct is considered to be a member of the enclosing struct or union. This applies
+        recursively if the enclosing struct or union is also anonymous.</p>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="kw">struct</span> v {
+   <span class="kw">union</span> { <span class="co">// anonymous union</span>
+      <span class="kw">struct</span> { <span class="dt">int</span> i, j; }; <span class="co">// anonymous structure</span>
+      <span class="kw">struct</span> { <span class="dt">long</span> k, l; } w;
+   };
+   <span class="dt">int</span> m;
+} v1;
+ 
+v1.i = <span class="dv">2</span>;   <span class="co">// valid</span>
+v1.k = <span class="dv">3</span>;   <span class="co">// invalid: inner structure is not anonymous</span>
+v1.w.k = <span class="dv">5</span>; <span class="co">// valid</span></code></pre>
+    <p>Similar to union, the behavior of the program is undefined if struct is defined without any named members
+        (including
+        those obtained via anonymous nested structs or unions).</p>
+    <h2 id="forward-declaration">Forward declaration</h2>
+    <p>A declaration of the following form</p>
+    <p><code>struct name;</code></p>
+    <p>hides any previously declared meaning for the name name in the tag name space and declares name as a new struct
+        name
+        in current scope, which will be defined later. Until the definition appears, this struct name has incomplete
+        type.
+    </p>
+    <p>This allows structs that refer to each other:</p>
+    <pre
+        class="sourceCode C"><code class="sourceCode c"><span class="kw">struct</span> y;
+<span class="kw">struct</span> x { <span class="kw">struct</span> y *p; <span class="co">/* ... */</span> };
+<span class="kw">struct</span> y { <span class="kw">struct</span> x *q; <span class="co">/* ... */</span> };</code></pre>
+    <p>Note that a new struct name may also be introduced just by using a struct tag within another declaration, but if
+        a
+        previously declared struct with the same name exists in the tag name space, the tag would refer to that name</p>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="kw">struct</span> s* p = NULL; <span class="co">// tag naming an unknown struct declares it</span>
+<span class="kw">struct</span> s { <span class="dt">int</span> a; }; <span class="co">// definition for the struct pointed to by p</span>
+<span class="dt">void</span> g(<span class="dt">void</span>)
+{
+    <span class="kw">struct</span> s; <span class="co">// forward declaration of a new, local struct s</span>
+              <span class="co">// this hides global struct s until the end of this block</span>
+    <span class="kw">struct</span> s *p;  <span class="co">// pointer to local struct s</span>
+                  <span class="co">// without the forward declaration above,</span>
+                  <span class="co">// this would point at the file-scope s</span>
+    <span class="kw">struct</span> s { <span class="dt">char</span>* p; }; <span class="co">// definitions of the local struct s</span>
+}</code></pre>
+    <h2 id="incomplete-types">Incomplete types</h2>
+    <p>An incomplete type is an object type that lacks sufficient information to determine the size of the objects of
+        that
+        type. An incomplete type may be completed at some point in the translation unit.</p>
+    <p>The following types are incomplete:</p>
+    <ul>
+        <li>the type void. This type cannot be completed.<br /></li>
+        <li>array type of unknown size. It can be completed by a later declaration that specifies the size.</li>
+    </ul>
+    <pre
+        class="sourceCode C"><code class="sourceCode c"><span class="kw">extern</span> <span class="dt">char</span> a[]; <span class="co">// the type of a is incomplete (this typically appears in a header)</span>
+<span class="dt">char</span> a[<span class="dv">10</span>];      <span class="co">// the type of a is now complete (this typically appears in a source file)</span></code></pre>
+    <ul>
+        <li>structure or union type of unknown content. It can be completed by a declaration of the same structure or
+            union
+            that defines its content later in the same scope.</li>
+    </ul>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="kw">struct</span> node {
+  <span class="kw">struct</span> node *next; <span class="co">// struct node is incomplete at this point</span>
+}; <span class="co">// struct node is complete at this point</span></code></pre>
+    <h2 id="storage-classes-in-c">Storage Classes in C</h2>
+    <p>Syntax:</p>
+    <p><code>storage_class var_data_type var_name;</code></p>
+    <p>C language uses 4 storage classes, namely:</p>
+    <ul>
+        <li>
+            <p><code>auto</code>: This is the default storage class for all the variables declared inside a function or
+                a
+                block. Hence, the keyword auto is rarely used while writing programs in C language. Auto variables can
+                be
+                only accessed within the block/function they have been declared and not outside them (which defines
+                their
+                scope). Of course, these can be accessed within nested blocks within the parent block/function in which
+                the
+                auto variable was declared. However, they can be accessed outside their scope as well using the concept
+                of
+                pointers given here by pointing to the very exact memory location where the variables resides. They are
+                assigned a garbage value by default whenever they are declared.</p>
+        </li>
+        <li>
+            <p><code>extern</code>: Extern storage class simply tells us that the variable is defined elsewhere and not
+                within the same block where it is used. Basically, the value is assigned to it in a different block and
+                this
+                can be overwritten/changed in a different block as well. So an extern variable is nothing but a global
+                variable initialized with a legal value where it is declared in order to be used elsewhere. It can be
+                accessed within any function/block. Also, a normal global variable can be made extern as well by placing
+                the
+                ‘extern’ keyword before its declaration/definition in any function/block. This basically signifies that
+                we
+                are not initializing a new variable but instead we are using/accessing the global variable only. The
+                main
+                purpose of using extern variables is that they can be accessed between two different files which are
+                part of
+                a large program. For more information on how extern variables work, have a look at this link.</p>
+        </li>
+        <li>
+            <p><code>static</code>: This storage class is used to declare static variables which are popularly used
+                while
+                writing programs in C language. Static variables have a property of preserving their value even after
+                they
+                are out of their scope! Hence, static variables preserve the value of their last use in their scope. So
+                we
+                can say that they are initialized only once and exist till the termination of the program. Thus, no new
+                memory is allocated because they are not re-declared. Their scope is local to the function to which they
+                were defined. Global static variables can be accessed anywhere in the program. By default, they are
+                assigned
+                the value 0 by the compiler.</p>
+        </li>
+        <li>
+            <p><code>register</code>: This storage class declares register variables which have the same functionality
+                as
+                that of the auto variables. The only difference is that the compiler tries to store these variables in
+                the
+                register of the microprocessor if a free register is available. This makes the use of register variables
+                to
+                be much faster than that of the variables stored in the memory during the runtime of the program. If a
+                free
+                register is not available, these are then stored in the memory only. Usually few variables which are to
+                be
+                accessed very frequently in a program are declared with the register keyword which improves the running
+                time
+                of the program. An important and interesting point to be noted here is that we cannot obtain the address
+                of
+                a register variable using pointers.</p>
+        </li>
+    </ul>
+    <p><a href="https://en.cppreference.com/w/c/language/storage_duration">refer</a></p>
+    <h2 id="type-qualifiers">Type Qualifiers</h2>
+    <p>There are four type qualifiers:</p>
+    <ul>
+        <li>const<br /></li>
+        <li>volatile<br /></li>
+        <li>__unaligned (axp)<br /></li>
+        <li>
+            <p>__restrict (pointer type only)</p>
+        </li>
+        <li>
+            <p><code>const Type Qualifier</code> - Use the const type qualifier to qualify an object whose value cannot
+                be
+                changed. Objects qualified by the const keyword cannot be modified. This means that an object declared
+                as
+                const cannot serve as the operand in an operation that changes its value; for example, the ++ and --
+                operators are not allowed on objects qualified with const . Using the const qualifier on an object
+                protects
+                it from the side effects caused by operations that alter storage.</p>
+        </li>
+        <li>
+            <p><code>volatile</code> - Every access (both read and write) made through an lvalue expression of
+                volatile-qualified type is considered an observable side effect for the purpose of optimization and is
+                evaluated strictly according to the rules of the abstract machine (that is, all writes are completed at
+                some
+                time before the next sequence point). This means that within a single thread of execution, a volatile
+                access
+                cannot be optimized out or reordered relative to another visible side effect that is separated by a
+                sequence
+                point from the volatile access.<br />A cast of a non-volatile value to a volatile type has no effect. To
+                access a non-volatile object using volatile semantics, its address must be cast to a pointer-to-volatile
+                and
+                then the access must be made through that pointer.<br />Any attempt to read or write to an object whose
+                type
+                is volatile-qualified through a non-volatile lvalue results in undefined behavior:</p>
+            <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">volatile</span> <span class="dt">int</span> n = <span class="dv">1</span>; <span class="co">// object of volatile-qualified type</span>
+<span class="dt">int</span>* p = (<span class="dt">int</span>*)&amp;n;
+<span class="dt">int</span> val = *p; <span class="co">// undefined behavior</span></code></pre>
+            <p>A member of a volatile-qualified structure or union type acquires the qualification of the type it
+                belongs to
+                (both when accessed using the . operator or the -&gt; operator):</p>
+            <pre class="sourceCode C"><code class="sourceCode c"><span class="kw">struct</span> s { <span class="dt">int</span> i; <span class="dt">const</span> <span class="dt">int</span> ci; } s;
+<span class="co">// the type of s.i is int, the type of s.ci is const int</span>
+<span class="dt">volatile</span> <span class="kw">struct</span> s vs;
+<span class="co">// the types of vs.i and vs.ci are volatile int and const volatile int</span></code></pre>
+        </li>
+    </ul>
+    <h4 id="example-1">Example</h4>
+    <p>demonstrates the use of volatile to disable optimizations</p>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;time.h&gt;</span>
+ 
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+    clock_t t = clock();
+    <span class="dt">double</span> d = <span class="fl">0.0</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> n=<span class="dv">0</span>; n&lt;<span class="dv">10000</span>; ++n)
+       <span class="kw">for</span> (<span class="dt">int</span> m=<span class="dv">0</span>; m&lt;<span class="dv">10000</span>; ++m)
+           d += d*n*m; <span class="co">// reads and writes to a non-volatile </span>
+    printf(<span class="st">&quot;Modified a non-volatile variable 100m times. &quot;</span>
+           <span class="st">&quot;Time used: %.2f seconds</span><span class="ch">\n</span><span class="st">&quot;</span>,
+           (<span class="dt">double</span>)(clock() - t)/CLOCKS_PER_SEC);
+ 
+    t = clock();
+    <span class="dt">volatile</span> <span class="dt">double</span> vd = <span class="fl">0.0</span>;
+    <span class="kw">for</span> (<span class="dt">int</span> n=<span class="dv">0</span>; n&lt;<span class="dv">10000</span>; ++n)
+       <span class="kw">for</span> (<span class="dt">int</span> m=<span class="dv">0</span>; m&lt;<span class="dv">10000</span>; ++m)
+           vd += vd*n*m; <span class="co">// reads and writes to a volatile </span>
+    printf(<span class="st">&quot;Modified a volatile variable 100m times. &quot;</span>
+           <span class="st">&quot;Time used: %.2f seconds</span><span class="ch">\n</span><span class="st">&quot;</span>,
+           (<span class="dt">double</span>)(clock() - t)/CLOCKS_PER_SEC);
+}</code></pre>
+    <p>Possible output:</p>
+    <pre><code>Modified a non-volatile variable 100m times. Time used: 0.00 seconds
+Modified a volatile variable 100m times. Time used: 0.79 seconds</code></pre>
+    <h4 id="uses-of-volatile">Uses of volatile</h4>
+    <ul>
+        <li>
+            <p>static volatile objects model memory-mapped I/O ports, and static const volatile objects model
+                memory-mapped
+                input ports, such as a real-time clock:</p>
+            <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">volatile</span> <span class="dt">short</span> *ttyport = (<span class="dt">volatile</span> <span class="dt">short</span>*)TTYPORT_ADDR;
+<span class="kw">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; N; ++i)
+    *ttyport = a[i]; <span class="co">// *ttyport is an lvalue of type volatile short</span></code></pre>
+        </li>
+        <li>static volatile objects of type sig_atomic_t are used for communication with signal handlers.<br /></li>
+        <li>volatile variables that are local to a function that contains an invocation of the setjmp macro are the only
+            local variables guaranteed to retain their values after longjmp returns.<br /></li>
+        <li>
+            <p>In addition, volatile variables can be used to disable certain forms of optimization, e.g. to disable
+                dead
+                store elimination or constant folding for microbenchmarks.</p>
+        </li>
+    </ul>
+    <p><a href="https://en.cppreference.com/w/c/language/volatile">more</a></p>
+    <p><a href="https://www.cs.auckland.ac.nz/references/unix/digital/AQTLTBTE/DOCU_037.HTM">refer</a></p>
+    <h2 id="conditional-inclusion">Conditional inclusion</h2>
+    <p>The preprocessor supports conditional compilation of parts of a source file. This behavior is controlled by #if,
+        #else, #elif, #ifdef, #ifndef and #endif directives.</p>
+    <p>Syntax:</p>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#if expression      </span>
+<span class="ot">#ifdef identifier       </span>
+<span class="ot">#ifndef identifier      </span>
+<span class="ot">#elif expression        </span>
+<span class="ot">#else       </span>
+<span class="ot">#endif</span></code></pre>
+    <p>Example:</p>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#define ABCD 2</span>
+<span class="ot">#include &lt;stdio.h&gt;</span>
+ 
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+ 
+<span class="ot">#ifdef ABCD</span>
+    printf(<span class="st">&quot;1: yes</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="ot">#else</span>
+    printf(<span class="st">&quot;1: no</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="ot">#endif</span>
+ 
+<span class="ot">#ifndef ABCD</span>
+    printf(<span class="st">&quot;2: no1</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="ot">#elif ABCD == 2</span>
+    printf(<span class="st">&quot;2: yes</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="ot">#else</span>
+    printf(<span class="st">&quot;2: no2</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="ot">#endif</span>
+ 
+<span class="ot">#if !defined(DCBA) &amp;&amp; (ABCD &lt; 2*4-3)</span>
+    printf(<span class="st">&quot;3: yes</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="ot">#endif</span>
+}</code></pre>
+    <p>Output:</p>
+    <pre><code>1: yes
+2: yes
+3: yes</code></pre>
+    <h2 id="define-macros">#define macros</h2>
+    <p>Example:</p>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
+ 
+<span class="co">//make function factory and use it</span>
+<span class="ot">#define FUNCTION(name, a) int fun_##name(int x) { return (a)*x;}</span>
+ 
+FUNCTION(quadruple, <span class="dv">4</span>)
+FUNCTION(<span class="dt">double</span>, <span class="dv">2</span>)
+ 
+<span class="ot">#undef FUNCTION</span>
+<span class="ot">#define FUNCTION 34</span>
+<span class="ot">#define OUTPUT(a) puts( #a )</span>
+ 
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+    printf(<span class="st">&quot;quadruple(13): %d</span><span class="ch">\n</span><span class="st">&quot;</span>, fun_quadruple(<span class="dv">13</span>) );
+    printf(<span class="st">&quot;double(21): %d</span><span class="ch">\n</span><span class="st">&quot;</span>, fun_double(<span class="dv">21</span>) );
+    printf(<span class="st">&quot;%d</span><span class="ch">\n</span><span class="st">&quot;</span>, FUNCTION);
+    OUTPUT(million);               <span class="co">//note the lack of quotes</span>
+}</code></pre>
+    <p>Output:</p>
+    <pre class="sourceCode C"><code class="sourceCode c">quadruple(<span class="dv">13</span>): <span class="dv">52</span>
+<span class="dt">double</span>(<span class="dv">21</span>): <span class="dv">42</span>
+<span class="dv">34</span>
+million</code></pre>
+    <h4 id="and-operators"># and ## operators</h4>
+    <p>In function-like macros, a # operator before an identifier in the replacement-list runs the identifier through
+        parameter replacement and encloses the result in quotes, effectively creating a string literal. In addition, the
+        preprocessor adds backslashes to escape the quotes surrounding embedded string literals, if any, and doubles the
+        backslashes within the string as necessary. All leading and trailing whitespace is removed, and any sequence of
+        whitespace in the middle of the text (but not inside embedded string literals) is collapsed to a single space.
+        This
+        operation is called &quot;stringification&quot;. If the result of stringification is not a valid string literal,
+        the
+        behavior is undefined.</p>
+    <p>When # appears before <strong>VA_ARGS</strong>, the entire expanded <strong>VA_ARGS</strong> is enclosed in
+        quotes:
+    </p>
+    <pre
+        class="sourceCode C"><code class="sourceCode c"><span class="ot">#define showlist(...) puts(#__VA_ARGS__)</span>
+showlist();            <span class="co">// expands to puts(&quot;&quot;)</span>
+showlist(<span class="dv">1</span>, <span class="st">&quot;x&quot;</span>, <span class="dt">int</span>); <span class="co">// expands to puts(&quot;1, \&quot;x\&quot;, int&quot;)</span></code></pre>
+    <p>(since C99)</p>
+    <p>A ## operator between any two successive identifiers in the replacement-list runs parameter replacement on the
+        two
+        identifiers and then concatenates the result.</p>
+    <p><a href="https://en.cppreference.com/w/c/preprocessor/replace">more</a></p>
+    <h2 id="gcc--g-vs--g3-gdb-flag-what-is-the-difference-also-is-there-a-difference-between--g-and--ggdb">GCC -g vs -g3
+        GDB
+        Flag: What is the Difference? Also is there a difference between -g and -ggdb?</h2>
+    <p><strong><code>-g</code></strong></p>
+    <p>Produce debugging information in the operating system's native format (stabs, COFF, XCOFF, or DWARF 2). GDB can
+        work
+        with this debugging information. On most systems that use stabs format, -g enables use of extra debugging
+        information that only GDB can use; this extra information makes debugging work better in GDB but probably makes
+        other debuggers crash or refuse to read the program. If you want to control for certain whether to generate the
+        extra information, use -gstabs+, -gstabs, -gxcoff+, -gxcoff, or -gvms (see below).</p>
+    <p>...</p>
+    <p><strong><code>-ggdb</code></strong></p>
+    <p>Produce debugging information for use by GDB. This means to use the most expressive format available (DWARF 2,
+        stabs,
+        or the native format if neither of those are supported), including GDB extensions if at all possible.</p>
+    <p><strong><code>-gvmslevel</code></strong></p>
+    <p>Request debugging information and also use level to specify how much information. The default level is 2. Level 0
+        produces no debug information at all. Thus, -g0 negates -g.</p>
+    <p>....</p>
+    <p><strong>Level 3 includes extra information, such as all the macro definitions present in the program. Some
+            debuggers
+            support macro expansion when you use -g3.</strong></p>
+    <p><a href="https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html">docs.</a></p>
+    <h2 id="debug-flags-in-gcc">Debug flags in gcc</h2>
+    <p>-g and -ggdb are similar with some slight differences, I read this <a
+            href="https://gcc.gnu.org/legacy-ml/gcc-help/2009-02/msg00130.html">here</a>:</p>
+    <p>-g produces debugging information in the OS¹s native format (stabs, COFF, XCOFF, or DWARF 2).</p>
+    <p>-ggdb produces debugging information specifically intended for gdb.</p>
+    <p>-ggdb3 produces extra debugging information, for example: including macro definitions.</p>
+    <p>-ggdb by itself without specifying the level defaults to -ggdb2 (i.e., gdb for level 2).</p>
+    <h2 id="weak-definitions">Weak Definitions</h2>
+    <p>A function definition (or EXPORTed label in assembler) can also be marked as weak, as can a variable definition.
+        In
+        this case, a weak symbol definition is created in the object file.</p>
+    <p>A weak definition can be used to resolve any reference to that symbol in the same way as a normal definition.
+        However, if another (non-weak) definition of that symbol exists in the build, the linker will use that
+        definition
+        instead of the weak definition, and not produce an error due to multiply-defined symbols.</p>
+    <h4 id="example-usage">Example usage:</h4>
+    <p>A simple or dummy implementation of a function can be provided as a WEAK definition. This allows the software to
+        be
+        built (with defined behaviour) without providing a 'full' implementation of this function, but also allows a
+        full
+        implementation to be provided for some builds if required.</p>
+    <h2 id="targeted-flattening-instead-of-global-inlining">Targeted flattening instead of global inlining</h2>
+    <p>Now for the trick! Both GCC and Clang support <code>__attribute__((flatten)).</code> Putting it on a function
+        causes
+        all of its callees to be inlined into it. It’s dead simple.</p>
+    <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">void</span> do_thing(<span class="dt">int</span> input)
+{
+    <span class="co">// this code is not always inlined at the call site</span>
+}
+
+__attribute__((flatten)) <span class="dt">void</span> hot_code()
+{
+    <span class="co">// the program spends &gt;80% of its runtime in this function</span>
+    <span class="kw">while</span> (condition) {
+        call_something();   <span class="co">// inlined!</span>
+        do_thing(y);        <span class="co">// inlined!</span>
+        other_thing();      <span class="co">// also inlined!</span>
+    }
+}
+
+<span class="dt">void</span> cool_code()
+{
+    <span class="co">// the program spends &lt;5% of its runtime in this function</span>
+    ...
+    do_thing(a);            <span class="co">// not inlined!</span>
+    do_thing(b);            <span class="co">// not inlined!</span>
+    do_thing(c);            <span class="co">// guess!</span>
+}</code></pre>
+    <p><strong>Note: Functions with <code>__attribute__((noinline))</code> will not be inlined. The same goes for
+            functions
+            where the compiler can’t see the body.</strong></p>
+    <h4 id="in-conclusion">In conclusion</h4>
+    <p><code>__attribute__((flatten))</code>lets you opt in to the pros of aggressive inlining on a per-function basis,
+        while protecting the rest of your program from the cons!</p>
+
+
+    </div>
+</body>
+
+</html>
