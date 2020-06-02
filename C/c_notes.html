@@ -37,6 +37,7 @@
 
 <body>
     <div style="padding-left: 60px; padding-right: 60px;">
+
         <h1 id="c-notes">C NOTES</h1>
         <p><a href="https://github.com/TonyJosi97/tutorial/blob/master/c/readme_2.md"><strong>Readme Page -
                     2</strong></a></p>
@@ -44,29 +45,33 @@
         <p><strong>Readme Page - 1</strong><br />_____</p>
         <ul>
             <li><a href="#c-notes">C NOTES</a><br /></li>
-            <li><a href="#convert-btw-uint32--float">Convert btw UINT32 &amp; FLOAT</a><br /></li>
+            <li><a href="#pointer---value-type-casting">Pointer - Value type casting</a><br /></li>
             <li>
                 <p><a href="#difference-between-const-char-p-char--const-p-and-const-char--const-p">Difference between
-                        const char *p, char * const p and const char * const p</a></p>
+                        const
+                        char *p, char * const p and const char * const p</a></p>
                 <ul>
                     <li><a
                             href="#const-keyword-applies-to-whatever-is-immediately-to-its-left-if-there-is-nothing-to-its-left-it-applies-to-whatever-is-immediately-to-its-right">const
                             keyword applies to whatever is immediately to its left. If there is nothing to its left, it
-                            applies to whatever is immediately to its right.</a><br /></li>
+                            applies
+                            to whatever is immediately to its right.</a><br /></li>
                     <li><a
                             href="#note-there-is-no-difference-between-const-char-p-and-char-const-p-as-both-are-pointer-to-a-const-char-and-position-of--asterik-is-also-same">NOTE:
                             There is no difference between const char *p and char const *p as both are pointer to a
-                            const char and position of * (asterik) is also same.</a><br /></li>
+                            const char
+                            and position of * (asterik) is also same.</a><br /></li>
                     <li><a href="#note-char-const--const-ptr-is-same-as-const-char-const-ptr">NOTE: char const * const
-                            ptr is same as const char *const ptr.</a><br /></li>
+                            ptr is
+                            same as const char *const ptr.</a><br /></li>
                 </ul>
             </li>
             <li>
                 <p><a href="#difference-between-int-var-and-int-var">Difference between int* var and int *var</a></p>
                 <ul>
                     <li><a href="#prefer-int-i-because-the-parser-attaches-the-star-to-the-variable-and-not-the-type">prefer
-                            int *i; because the parser attaches the star to the variable, and not the type.</a><br />
-                    </li>
+                            int
+                            *i; because the parser attaches the star to the variable, and not the type.</a><br /></li>
                 </ul>
             </li>
             <li><a href="#sizet-type">size_t type</a><br /></li>
@@ -107,7 +112,8 @@
                         pass-by-reference.</a></p>
                 <ul>
                     <li><a href="#a-function-is-not-able-to-change-the-actual-parameters-value">A function is not able
-                            to change the actual parameters value.</a><br /></li>
+                            to change
+                            the actual parameters value.</a><br /></li>
                 </ul>
             </li>
             <li>
@@ -123,7 +129,8 @@
             <li><a href="#location-of-local-pointer">Location of local pointer</a><br /></li>
             <li>
                 <p><a href="#how-to-change-a-pointer-inside-a-function-addr-it-points-not-value--pointer-to-pointer">How
-                        to change a pointer inside a function (addr. it points, not value) / pointer to pointer</a></p>
+                        to
+                        change a pointer inside a function (addr. it points, not value) / pointer to pointer</a></p>
                 <ul>
                     <li><a href="#use-pointer-to-pointer-double-pointer">use pointer to pointer (double
                             pointer)</a><br /></li>
@@ -155,15 +162,18 @@
             <li><a href="#lvalue-and-rvalue">lvalue and rvalue</a><br /></li>
             <li><a href="#type-groups">Type groups</a><br /></li>
             <li><a href="#compiling-multiple-c-files-and-linking-them">Compiling multiple C files and linking
-                    them</a><br /></li>
+                    them</a><br />
+            </li>
             <li><a href="#undefined-behaviour-not-exactly-undefined-while-using-scanf">Undefined behaviour (not exactly
                     undefined) while using scanf()</a><br /></li>
             <li><a href="#difference-between-pointers-and-reference">Difference between pointers and reference</a><br />
             </li>
             <li><a href="#turn-on-different-warnings-while-compiling-c-files">Turn on different warnings while compiling
-                    c files:</a><br /></li>
+                    c
+                    files:</a><br /></li>
             <li><a href="#why-is-arr--1-and-arr--1-different-though-arr-and-arr-point-to-the-same-location">Why is (arr
-                    + 1) and (&amp;arr + 1) different though arr and &amp;arr point to the same location?</a><br /></li>
+                    + 1) and
+                    (&amp;arr + 1) different though arr and &amp;arr point to the same location?</a><br /></li>
             <li>
                 <p><a href="#the-clockwisespiral-rule">The ``Clockwise/Spiral Rule''</a></p>
                 <ul>
@@ -180,11 +190,14 @@
             <li><a href="#c-const-actually-means-read-only">C <code>const</code> actually means read only.</a><br />
             </li>
             <li><a href="#can-a-const-variable-be-used-to-declare-the-size-of-an-array-in-c">Can a const variable be
-                    used to declare the size of an array in C?</a><br /></li>
+                    used to
+                    declare the size of an array in C?</a><br /></li>
             <li><a href="#when-and-for-what-purposes-should-the-const-keyword-be-used-in-c-for-variables">When and for
-                    what purposes should the const keyword be used in C for variables?</a><br /></li>
+                    what
+                    purposes should the const keyword be used in C for variables?</a><br /></li>
             <li><a href="#is-extern-needed-for-functions-in-header-file">Is <code>extern</code> needed for functions in
-                    header file</a><br /></li>
+                    header
+                    file</a><br /></li>
             <li><a href="#difference-between-defining-a-variable-and-declaring-a-variable">Difference between defining a
                     variable and declaring a variable</a><br /></li>
             <li><a href="#best-way-to-declare-and-define-global-variables">Best way to declare and define global
@@ -194,7 +207,8 @@
             <li><a href="#what-is-the-difference-between-scope-and-linkage">What is the difference between scope and
                     linkage?</a><br /></li>
             <li><a href="#how-can-i-access-structure-fields-by-name-at-run-time">How can I access structure fields by
-                    name at run time?</a><br /></li>
+                    name at
+                    run time?</a><br /></li>
             <li>
                 <p><a href="#bit-fields-in-c">Bit Fields in C</a></p>
                 <ul>
@@ -202,13 +216,16 @@
                 </ul>
             </li>
             <li><a href="#is-there-a-quick-way-to-determine-endianness-of-your-machine">Is there a quick way to
-                    determine endianness of your machine?</a><br /></li>
+                    determine
+                    endianness of your machine?</a><br /></li>
             <li><a
                     href="#the-behavior-of-code-which-contains-multiple-ambiguous-side-effects-has-always-been-undefined-loosely-speaking-by-multiple-ambiguous-side-effects-we-mean-any-combination-of-increment-decrement-and-assignment-operators---------etc-in-a-single-expression-which-causes-the-same-object-either-to-be-modified-twice-or-modified-and-then-inspected">The
                     behavior of code which contains multiple, ambiguous side effects has always been undefined. (Loosely
                     speaking, by ``multiple, ambiguous side effects'' we mean any combination of increment, decrement,
-                    and assignment operators (++, --, =, +=, -=, etc.) in a single expression which causes the same
-                    object either to be modified twice or modified and then inspected.</a><br /></li>
+                    and
+                    assignment operators (++, --, =, +=, -=, etc.) in a single expression which causes the same object
+                    either to
+                    be modified twice or modified and then inspected.</a><br /></li>
             <li>
                 <p><a href="#short-circuiting-behavior-in-c">short-circuiting behavior in C</a></p>
                 <ul>
@@ -219,14 +236,16 @@
             <li><a
                     href="#how-can-i-avoid-these-undefined-evaluation-order-difficulties-if-i-dont-feel-like-learning-the-complicated-rules">How
                     can I avoid these undefined evaluation order difficulties if I don't feel like learning the
-                    complicated rules?</a><br /></li>
+                    complicated
+                    rules?</a><br /></li>
             <li><a href="#why-doesnt-this-code-int-a--1000-b--1000-long-int-c--a--b-work">Why doesn't this code
                     <code>int a = 1000, b = 1000; long int c = a * b;</code> work?</a><br /></li>
             <li>
                 <p><a href="#to-do">TO DO:</a></p>
             </li>
         </ul>
-        <h2 id="convert-btw-uint32-float">Convert btw UINT32 &amp; FLOAT</h2>
+        <h2 id="pointer---value-type-casting">Pointer - Value type casting</h2>
+        <h4 id="example---uint32_t-float">Example - UINT32_T &amp; FLOAT</h4>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">uint32_t</span> FloatToUint(<span class="dt">float</span> n) {
    <span class="kw">return</span> (<span class="dt">uint32_t</span>)(*(<span class="dt">uint32_t</span>*)&amp;n);
 }
@@ -235,26 +254,32 @@
    <span class="kw">return</span> (<span class="dt">float</span>)(*(<span class="dt">float</span>*)&amp;n);
 }</code></pre>
         <h2 id="difference-between-const-char-p-char-const-p-and-const-char-const-p">Difference between const char *p,
-            char * const p and const char * const p</h2>
+            char *
+            const p and const char * const p</h2>
         <h3
             id="const-keyword-applies-to-whatever-is-immediately-to-its-left.-if-there-is-nothing-to-its-left-it-applies-to-whatever-is-immediately-to-its-right.">
             const keyword applies to whatever is immediately to its left. If there is nothing to its left, it applies to
             whatever is immediately to its right.</h3>
         <p><code>const char *ptr</code> : This is a pointer to a constant character. You cannot change the value pointed
-            by ptr, but you can change the pointer itself. const char * is a (non-const) pointer to a const char.</p>
+            by ptr,
+            but you can change the pointer itself. const char * is a (non-const) pointer to a const char.</p>
         <h4
             id="note-there-is-no-difference-between-const-char-p-and-char-const-p-as-both-are-pointer-to-a-const-char-and-position-of-asterik-is-also-same.">
             NOTE: There is no difference between const char *p and char const *p as both are pointer to a const char and
             position of * (asterik) is also same.</h4>
         <p><code>char *const ptr</code> : This is a constant pointer to non-constant character. You cannot change the
-            pointer p, but can change the value pointed by ptr.</p>
+            pointer p,
+            but can change the value pointed by ptr.</p>
         <p><code>const char * const ptr</code> : This is a constant pointer to constant character. You can neither
-            change the value pointed by ptr nor the pointer ptr.</p>
+            change the
+            value pointed by ptr nor the pointer ptr.</p>
         <h4 id="note-char-const-const-ptr-is-same-as-const-char-const-ptr.">NOTE: char const * const ptr is same as
-            const char *const ptr.</h4>
+            const char
+            *const ptr.</h4>
         <h2 id="difference-between-int-var-and-int-var">Difference between int* var and int *var</h2>
         <h4 id="prefer-int-i-because-the-parser-attaches-the-star-to-the-variable-and-not-the-type.">prefer int *i;
-            because the parser attaches the star to the variable, and not the type.</h4>
+            because the
+            parser attaches the star to the variable, and not the type.</h4>
         <p>This only becomes meaningful when you try to define two variables on the line. Regardless of how you write
             it:</p>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">int</span>* i,j;
@@ -263,62 +288,78 @@
         <p>in each of those, i is a pointer to an int, while j is just an int. The last syntax makes that clearer</p>
         <h2 id="size_t-type">size_t type</h2>
         <p>According to the 1999 ISO C standard (C99), <code>size_t</code> is an unsigned integer type of at least 16
-            bit (see sections 7.17 and 7.18.3).</p>
+            bit (see
+            sections 7.17 and 7.18.3).</p>
         <p>This type is used to represent the size of an object. Library functions that take or return sizes expect them
-            to be of type or have the return type of <code>size_t</code>. Further, the most frequently used
-            compiler-based operator sizeof should evaluate to a constant value that is compatible with
-            <code>size_t</code>.</p>
+            to be
+            of type or have the return type of <code>size_t</code>. Further, the most frequently used compiler-based
+            operator
+            sizeof should evaluate to a constant value that is compatible with <code>size_t</code>.</p>
         <p>It is guaranteed to be big enough to contain the size of the biggest object the host system can handle.
-            Basically the maximum permissible size is dependent on the compiler; if the compiler is 32 bit then it is
-            simply a typedef(i.e., alias) for unsigned int but if the compiler is 64 bit then it would be a typedef for
-            unsigned long long. The <code>size_t</code> data type is never negative.</p>
+            Basically the
+            maximum permissible size is dependent on the compiler; if the compiler is 32 bit then it is simply a
+            typedef(i.e.,
+            alias) for unsigned int but if the compiler is 64 bit then it would be a typedef for unsigned long long. The
+            <code>size_t</code> data type is never negative.</p>
         <h2
             id="to-convert-the-decimal-into-floating-point-we-have-3-elements-in-a-32-bit-floating-point-representation">
-            To convert the decimal into floating point, we have 3 elements in a 32-bit floating point representation:
-        </h2>
+            To
+            convert the decimal into floating point, we have 3 elements in a 32-bit floating point representation:</h2>
         <h4 id="i-sign-msb">i) Sign (MSB)</h4>
         <h4 id="ii-exponent-8-bits-after-msb">ii) Exponent (8 bits after MSB)</h4>
         <h4 id="iii-mantissa-remaining-23-bits">iii) Mantissa (Remaining 23 bits)</h4>
         <p><code>Sign bit</code> is the first bit of the binary representation. '1' implies negative number and '0'
-            implies positive number.<br />Example: To convert -17 into 32-bit floating point representation Sign bit = 1
-        </p>
+            implies
+            positive number.<br />Example: To convert -17 into 32-bit floating point representation Sign bit = 1</p>
         <p><code>Exponent</code> is decided by the nearest smaller or equal to 2n number. For 17, 16 is the nearest 2n.
-            Hence the exponent of 2 will be 4 since 24 = 16. 127 is the unique number for 32 bit floating point
-            representation. It is known as bias. It is determined by 2k-1 -1 where 'k' is the number of bits in exponent
-            field.<br />Thus bias = 127 for 32 bit. (28-1 -1 = 128-1 = 127)</p>
+            Hence
+            the exponent of 2 will be 4 since 24 = 16. 127 is the unique number for 32 bit floating point
+            representation. It is
+            known as bias. It is determined by 2k-1 -1 where 'k' is the number of bits in exponent field.<br />Thus bias
+            = 127
+            for 32 bit. (28-1 -1 = 128-1 = 127)</p>
         <p>Now, 127 + 4 = 131 i.e. 10000011 in binary representation.</p>
         <p><code>Mantissa</code>: 17 in binary = 10001.<br />Move the binary point so that there is only one bit from
-            the left. Adjust the exponent of 2 so that the value does not change. This is normalizing the number. 1.0001
-            x 24. Now, consider the fractional part and represented as 23 bits by adding zeros.</p>
+            the left.
+            Adjust the exponent of 2 so that the value does not change. This is normalizing the number. 1.0001 x 24.
+            Now,
+            consider the fractional part and represented as 23 bits by adding zeros.</p>
         <p>00010000000000000000000</p>
         <p>Thus the floating point representation of -17 is 1 10000011 00010000000000000000000</p>
         <h2
             id="to-convert-the-decimal-into-floating-point-we-have-3-elements-in-a-32-bit-floating-point-representation-1">
-            To convert the decimal into floating point, we have 3 elements in a 32-bit floating point representation:
-        </h2>
+            To
+            convert the decimal into floating point, we have 3 elements in a 32-bit floating point representation:</h2>
         <h4 id="i-sign-msb-1">i) Sign (MSB)</h4>
         <h4 id="ii-exponent-8-bits-after-msb-1">ii) Exponent (8 bits after MSB)</h4>
         <h4 id="iii-mantissa-remaining-23-bits-1">iii) Mantissa (Remaining 23 bits)</h4>
         <p><code>Sign</code> bit is the first bit of the binary representation. '1' implies negative number and '0'
-            implies positive number.<br />Example: To convert -17 into 32-bit floating point representation Sign bit = 1
-        </p>
+            implies
+            positive number.<br />Example: To convert -17 into 32-bit floating point representation Sign bit = 1</p>
         <p><code>Exponent</code> is decided by the nearest smaller or equal to 2n number. For 17, 16 is the nearest 2n.
-            Hence the exponent of 2 will be 4 since 24 = 16. 127 is the unique number for 32 bit floating point
-            representation. It is known as bias. It is determined by 2k-1 -1 where 'k' is the number of bits in exponent
-            field.<br />Thus bias = 127 for 32 bit. (28-1 -1 = 128-1 = 127)</p>
+            Hence
+            the exponent of 2 will be 4 since 24 = 16. 127 is the unique number for 32 bit floating point
+            representation. It is
+            known as bias. It is determined by 2k-1 -1 where 'k' is the number of bits in exponent field.<br />Thus bias
+            = 127
+            for 32 bit. (28-1 -1 = 128-1 = 127)</p>
         <p>Now, 127 + 4 = 131 i.e. 10000011 in binary representation.</p>
         <p><code>Mantissa</code>: 17 in binary = 10001.<br />Move the binary point so that there is only one bit from
-            the left. Adjust the exponent of 2 so that the value does not change. This is normalizing the number. 1.0001
-            x 24. Now, consider the fractional part and represented as 23 bits by adding zeros.</p>
+            the left.
+            Adjust the exponent of 2 so that the value does not change. This is normalizing the number. 1.0001 x 24.
+            Now,
+            consider the fractional part and represented as 23 bits by adding zeros.</p>
         <p>00010000000000000000000</p>
         <p>Thus the floating point representation of -17 is 1 10000011 00010000000000000000000</p>
         <h2 id="cplusplus-macro">__cplusplus macro</h2>
         <p>The __cplusplus preprocessor macro is defined if the compilation unit is compiled with a C++ compiler. If
-            defined, its value corresponds to the C++ standard that the compiler uses to compile a compilation unit.</p>
+            defined,
+            its value corresponds to the C++ standard that the compiler uses to compile a compilation unit.</p>
         <h2
             id="extern-c-with-__cplusplus-macro-extern-c-is-meant-to-be-recognized-by-a-c-compiler-and-to-notify-the-compiler-that-the-function-is-or-to-be-compiled-in-c-style.">
             extern C with __cplusplus macro<br />extern &quot;C&quot; is meant to be recognized by a C++ compiler and to
-            notify the compiler that the function is (or to be) compiled in C style.</h2>
+            notify
+            the compiler that the function is (or to be) compiled in C style.</h2>
         <h4 id="example">Example:</h4>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#ifdef __cplusplus</span>
 <span class="kw">extern</span> <span class="st">&quot;C&quot;</span> {
@@ -336,31 +377,42 @@
             <strong><code>as an independant (seperate) variable in each source files.</code></strong></p>
         <p>In the C programming language, <code>static</code> is used with <code>global variables</code> and
             <code>functions</code> to set their scope to the containing file. <strong>In local variables, static is used
-                to store the variable in the statically allocated memory instead of the automatically allocated
-                memory.</strong> While the language does not dictate the implementation of either type of memory,
-            <strong>statically allocated memory is typically reserved in data segment of the program at compile
-                time</strong>, while the <code>automatically</code> allocated memory is normally
-            <code>implemented</code> as a <code>transient call stack.</code></p>
+                to
+                store the variable in the statically allocated memory instead of the automatically allocated
+                memory.</strong>
+            While the language does not dictate the implementation of either type of memory, <strong>statically
+                allocated memory
+                is typically reserved in data segment of the program at compile time</strong>, while the
+            <code>automatically</code> allocated memory is normally <code>implemented</code> as a
+            <code>transient call stack.</code></p>
         <p>Static global variables and functions are also possible in C/C++. The purpose of these is to limit scope of a
             variable or function to a file.</p>
         <p>Static variables should not be declared inside structure. The reason is C compiler requires the entire
-            structure elements to be placed together (i.e.) memory allocation for structure members should be
-            contiguous. It is possible to declare structure inside the function (stack segment) or allocate memory
-            dynamically(heap segment) or it can be even global (BSS or data segment). Whatever might be the case, all
-            structure members should reside in the same memory segment because the value for the structure element is
-            fetched by counting the offset of the element from the beginning address of the structure. Separating out
-            one member alone to data segment defeats the purpose of static variable and it is possible to have an entire
-            structure as static.</p>
+            structure
+            elements to be placed together (i.e.) memory allocation for structure members should be contiguous. It is
+            possible
+            to declare structure inside the function (stack segment) or allocate memory dynamically(heap segment) or it
+            can be
+            even global (BSS or data segment). Whatever might be the case, all structure members should reside in the
+            same
+            memory segment because the value for the structure element is fetched by counting the offset of the element
+            from the
+            beginning address of the structure. Separating out one member alone to data segment defeats the purpose of
+            static
+            variable and it is possible to have an entire structure as static.</p>
         <p>In C, functions are global by default. The “static” keyword before a function name makes it static.</p>
         <p>Unlike global functions in C, access to static functions is restricted to the file where they are declared.
             Therefore, when we want to restrict access to functions, we make them static. Another reason for making
-            functions static can be reuse of the same function name in other files.</p>
+            functions
+            static can be reuse of the same function name in other files.</p>
         <h2
             id="the-c-language-is-pass-by-value-without-exception.-passing-a-pointer-as-a-parameter-does-not-mean-pass-by-reference.">
             The C language is pass-by-value without exception. Passing a pointer as a parameter does not mean
-            pass-by-reference.</h2>
+            pass-by-reference.
+        </h2>
         <h4 id="a-function-is-not-able-to-change-the-actual-parameters-value.">A function is not able to change the
-            actual parameters value.</h4>
+            actual
+            parameters value.</h4>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
 
 <span class="dt">void</span> function2(<span class="dt">int</span> *param) {
@@ -386,24 +438,34 @@ ptr&#39;s address -1846583468</code></pre>
             Converting C source code files to an executable program is normally done in two steps: compiling and
             linking.</h4>
         <p><strong>First, the compiler converts the source code to object files (*.o)</strong><br /><strong>Then, the
-                linker takes these object files, together with statically-linked libraries and creates an executable
-                program.</strong></p>
+                linker
+                takes these object files, together with statically-linked libraries and creates an executable
+                program.</strong>
+        </p>
         <p>In the first step, the compiler takes a compilation unit, which is normally a preprocessed source file (so, a
-            source file with the contents of all the headers that it #includes) and converts that to an object file.</p>
+            source
+            file with the contents of all the headers that it #includes) and converts that to an object file.</p>
         <p>In each compilation unit, all the functions that are used must be declared, to let the compiler know that the
             function exists and what its arguments are. In your example, the declaration of the function returnSeven is
-            in the header file header.h. When you compile main.c, you include the header with the declaration so that
-            the compiler knows that returnSeven exists when it compiles main.c.</p>
+            in the
+            header file header.h. When you compile main.c, you include the header with the declaration so that the
+            compiler
+            knows that returnSeven exists when it compiles main.c.</p>
         <p>When the linker does its job, it needs to find the definition of each function. Each function has to be
-            defined exactly once in one of the object files - if there are multiple object files that contain the
-            definition of the same function, the linker will stop with an error.</p>
+            defined
+            exactly once in one of the object files - if there are multiple object files that contain the definition of
+            the same
+            function, the linker will stop with an error.</p>
         <h3 id="linkage">Linkage</h3>
         <p>There is <strong>external linkage</strong> and <strong>internal linkage</strong>.</p>
         <p>By default, functions have <strong>external linkage</strong>, which means that the compiler makes these
-            functions visible to the linker. If you make a function <strong><em>static</em></strong>, it has
-            <strong>internal linkage</strong> - it is only visible inside the compilation unit in which it is defined
-            (the linker won't know that it exists). This can be useful for functions that do something internally in a
-            source file and that you want to hide from the rest of the program.</p>
+            functions
+            visible to the linker. If you make a function <strong><em>static</em></strong>, it has <strong>internal
+                linkage</strong> - it is only visible inside the compilation unit in which it is defined (the linker
+            won't know
+            that it exists). This can be useful for functions that do something internally in a source file and that you
+            want to
+            hide from the rest of the program.</p>
         <h2 id="location-of-local-pointer">Location of local pointer</h2>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">const</span> <span class="dt">char</span>* func()
 {
@@ -411,17 +473,21 @@ ptr&#39;s address -1846583468</code></pre>
     <span class="kw">return</span> ptr;
 }</code></pre>
         <p>If you are referring to the location where the string <code>OK</code> is stored, then its stored in the
-            <strong>code section</strong> of the memory and ptr is stored in the <strong>stack</strong>.</p>
+            <strong>code
+                section</strong> of the memory and ptr is stored in the <strong>stack</strong>.</p>
         <p>And the location of <code>OK</code> in code section is still accessible as its address is being returned by
             <code>func()</code>.</p>
         <p>Also, the code section is <strong>read only</strong>. That is the reason why other answers suggested to make
-            your function declaration as:</p>
+            your
+            function declaration as:</p>
         <p><code>const char * func ()</code></p>
         <h2 id="how-to-change-a-pointer-inside-a-function-addr.-it-points-not-value-pointer-to-pointer">How to change a
-            pointer inside a function (addr. it points, not value) / pointer to pointer</h2>
+            pointer
+            inside a function (addr. it points, not value) / pointer to pointer</h2>
         <h3 id="use-pointer-to-pointer-double-pointer">use pointer to pointer (double pointer)</h3>
         <p>Use <code>\*\*</code> when you want to preserve (OR retain change in) the Memory-Allocation or Assignment
-            even outside of a function call.</p>
+            even
+            outside of a function call.</p>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">void</span> allocate(<span class="dt">int</span>** p)
 {
   *p = (<span class="dt">int</span>*)malloc(<span class="kw">sizeof</span>(<span class="dt">int</span>));
@@ -443,9 +509,12 @@ ptr&#39;s address -1846583468</code></pre>
         <p><strong>Size of dynamically allocated memory can be changed by using realloc().</strong></p>
         <p><code>void *realloc(void *ptr, size_t size);</code></p>
         <p><code>realloc</code> deallocates the old object pointed to by ptr and returns a pointer to a new object that
-            has the size specified by size. The contents of the new object is identical to that of the old object prior
-            to deallocation, up to the lesser of the new and old sizes. Any bytes in the new object beyond the size of
-            the old object have indeterminate values.</p>
+            has the
+            size specified by size. The contents of the new object is identical to that of the old object prior to
+            deallocation,
+            up to the lesser of the new and old sizes. Any bytes in the new object beyond the size of the old object
+            have
+            indeterminate values.</p>
         <p>The point to note is that <code>realloc()</code> should only be used for dynamically allocated memory.</p>
         <h2 id="finding-element-size-of-arrays-in-functions">Finding element size of arrays in functions</h2>
         <p><code>sizeof( a ) / sizeof( a[0] )</code></p>
@@ -462,9 +531,11 @@ ptr&#39;s address -1846583468</code></pre>
         <p>and within the function in expression</p>
         <p><code>size_t n = sizeof( a ) / sizeof( a[0] );</code> parameter a is just a pointer.</p>
         <p>Pointers do not keep an information about whether they point to a single object or the first object of some
-            array.</p>
+            array.
+        </p>
         <p>In this case you should declare the function with second parameter that specifies the number of elements in
-            the array.</p>
+            the
+            array.</p>
         <h2 id="difference-between-char-str10-string-and-char-str-string">Difference between
             <code>char str[10] = &quot;string&quot;</code> and <code>char *str = &quot;string&quot;</code></h2>
         <h4 id="char-str10-string"><code>char str[10] = &quot;string&quot;</code></h4>
@@ -492,21 +563,26 @@ ptr&#39;s address -1846583468</code></pre>
 <span class="dt">char</span> *p  = <span class="st">&quot;string literal&quot;</span>;</code></pre>
         <ul>
             <li>As the initializer for an array of char, as in the declaration of char a[] , it specifies the initial
-                values of the characters in that array (and, if necessary, its size).<br /></li>
+                values of
+                the characters in that array (and, if necessary, its size).<br /></li>
             <li>Anywhere else, it turns into an unnamed, static array of characters, and this
                 <strong><code>unnamed array may be stored in read-only memory,</code></strong> and which
-                <strong>therefore cannot necessarily be modified.
-                    <code>[gives UB (undefined behavior) if modified]</code></strong> In an expression context, the
-                array is converted at once to a pointer, so the second declaration initializes p to point to the unnamed
-                array's first element.</li>
+                <strong>therefore
+                    cannot necessarily be modified. <code>[gives UB (undefined behavior) if modified]</code></strong> In
+                an
+                expression context, the array is converted at once to a pointer, so the second declaration initializes p
+                to
+                point to the unnamed array's first element.</li>
         </ul>
         <h2 id="alignment">Alignment</h2>
         <p>Every complete object type has a property called alignment requirement, which is an integer value of type
             <code>size_t</code> representing the number of bytes between successive addresses at which objects of this
-            type can be allocated. The valid alignment values are non-negative integral powers of two.</p>
+            type can
+            be allocated. The valid alignment values are non-negative integral powers of two.</p>
         <p>The alignment requirement of a type can be queried with <code>_Alignof</code>. (since C11)</p>
         <p>In order to satisfy alignment requirements of all members of a struct, padding may be inserted after some of
-            its members.</p>
+            its
+            members.</p>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
 <span class="ot">#include &lt;stdalign.h&gt;</span>
  
@@ -560,22 +636,26 @@ ptr&#39;s address -1846583468</code></pre>
         <pre><code>GOOD: sizeof -&gt; 16   alignof -&gt; 8
 BAD : sizeof -&gt; 32   alignof -&gt; 8</code></pre>
         <p>Here sizeof of BAD is 32 because as GOOD is included inside BAD the alignment which is higher in GOOD follows
-            in BAD as well.</p>
+            in BAD
+            as well.</p>
         <p>an alignment of 4 means that data of this type should (or must, depends on the CPU) be stored starting at an
-            address that is a multiple of 4.</p>
+            address
+            that is a multiple of 4.</p>
         <h2 id="lvalue-and-rvalue">lvalue and rvalue</h2>
         <p>An <code>lvalue</code> (locator value) represents an object that occupies some identifiable location in
-            memory (i.e. has an address).</p>
+            memory (i.e.
+            has an address).</p>
         <p><code>rvalues</code> are defined by exclusion. Every expression is either an lvalue or an rvalue, so, an
-            rvalue is an expression that does not represent an object occupying some identifiable location in memory.
-        </p>
+            rvalue is an
+            expression that does not represent an object occupying some identifiable location in memory.</p>
         <p>For example, An assignment expects an lvalue as its left operand, so the following is valid:</p>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">int</span> i = <span class="dv">10</span>;
 But this is not:
 <span class="dt">int</span> i;
 <span class="dv">10</span> = i;</code></pre>
         <p>This is because i has an address in memory and is a lvalue. While 10 doesn't have an identifiable memory
-            location and hence is an rvalue. So assigning the value of i to 10 doesn't make any sense.</p>
+            location and
+            hence is an rvalue. So assigning the value of i to 10 doesn't make any sense.</p>
         <p>Unlike C++, pointer incrementation/decrementation does not return an lvalue in C.</p>
         <h2 id="type-groups">Type groups</h2>
         <ul>
@@ -594,16 +674,21 @@ But this is not:
         <pre class="sh"><code>gcc main.c -o main.o -c
 gcc module.c -o module.o -c</code></pre>
         <p>Where the -c flag tells the compiler to stop after the compilation phase, without linking. Then, you can link
-            your two object files as so:</p>
+            your
+            two object files as so:</p>
         <pre class="sh"><code>gcc -o myprog main.o module.o</code></pre>
         <h2 id="undefined-behaviour-not-exactly-undefined-while-using-scanf">Undefined behaviour (not exactly undefined)
-            while using scanf()</h2>
+            while
+            using scanf()</h2>
         <p>Check for return value of scanf to check if ip buffer is pollutted</p>
         <p>On success, the function returns the number of items of the argument list successfully filled. This count can
-            match the expected number of items or be less (even zero) due to a matching failure, a reading error, or the
-            reach of the end-of-file.</p>
+            match
+            the expected number of items or be less (even zero) due to a matching failure, a reading error, or the reach
+            of the
+            end-of-file.</p>
         <p>If a reading error happens or the end-of-file is reached while reading, the proper indicator is set (feof or
-            ferror). And, if either happens before any data could be successfully read, EOF is returned.</p>
+            ferror).
+            And, if either happens before any data could be successfully read, EOF is returned.</p>
         <p>If an encoding error happens interpreting wide characters, the function sets errno to EILSEQ.</p>
         <p>Example:</p>
         <pre class="sourceCode C"><code class="sourceCode c">printf(<span class="st">&quot;Enter option: &quot;</span>);
@@ -652,8 +737,10 @@ gcc module.c -o module.o -c</code></pre>
     cout &lt;&lt; <span class="st">&quot;a = &quot;</span> &lt;&lt; a &lt;&lt; <span class="st">&quot; b = &quot;</span> &lt;&lt; b &lt;&lt; <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>; 
 } </code></pre>
         <p>A pointer to a class/struct uses ‘-&gt;'(arrow operator) to access it’s members whereas a reference uses a
-            ‘.'(dot operator)<br />A pointer needs to be dereferenced with * to access the memory location it points to,
-            whereas a reference can be used directly.</p>
+            ‘.'(dot
+            operator)<br />A pointer needs to be dereferenced with * to access the memory location it points to, whereas
+            a
+            reference can be used directly.</p>
         <h2 id="turn-on-different-warnings-while-compiling-c-files">Turn on different warnings while compiling c files:
         </h2>
         <p>Example:</p>
@@ -663,21 +750,25 @@ gcc module.c -o module.o -c</code></pre>
         <pre class="sh"><code>-Wpedantic
 -pedantic</code></pre>
         <p>Issue all the warnings demanded by strict ISO C and ISO C++; reject all programs that use forbidden
-            extensions, and some other programs that do not follow ISO C and ISO C++. For ISO C, follows the version of
-            the ISO C standard specified by any -std option used.</p>
+            extensions, and
+            some other programs that do not follow ISO C and ISO C++. For ISO C, follows the version of the ISO C
+            standard
+            specified by any -std option used.</p>
         <pre class="sh"><code>-Wall</code></pre>
         <p>This enables all the warnings about constructions that some users consider questionable, and that are easy to
-            avoid (or modify to prevent the warning), even in conjunction with macros. This also enables some
-            language-specific warnings described in C++ Dialect Options and Objective-C and Objective-C++ Dialect
-            Options.</p>
+            avoid
+            (or modify to prevent the warning), even in conjunction with macros. This also enables some
+            language-specific
+            warnings described in C++ Dialect Options and Objective-C and Objective-C++ Dialect Options.</p>
         <p><code>-Wall</code> turns on the following warning flags:<br />-Waddress<br />-Warray-bounds=1 (only with
             -O2)<br />-Wbool-compare<br />-Wbool-operation<br />-Wc++11-compat -Wc++14-compat<br />-Wcatch-value (C++
-            and Objective-C++ only)<br />-Wchar-subscripts<br />-Wcomment<br />-Wduplicate-decl-specifier (C and
-            Objective-C only)<br />-Wenum-compare (in C/ObjC; this is on by default in C++)<br />-Wenum-conversion in
+            and
+            Objective-C++ only)<br />-Wchar-subscripts<br />-Wcomment<br />-Wduplicate-decl-specifier (C and Objective-C
+            only)<br />-Wenum-compare (in C/ObjC; this is on by default in C++)<br />-Wenum-conversion in
             C/ObjC;<br />-Wformat<br />-Wint-in-bool-context<br />-Wimplicit (C and Objective-C
-            only)<br />-Wimplicit-int (C and Objective-C only)<br />-Wimplicit-function-declaration (C and Objective-C
-            only)<br />-Winit-self (only for C++)<br />-Wzero-length-bounds<br />-Wlogical-not-parentheses<br />-Wmain
-            (only for C/ObjC and unless
+            only)<br />-Wimplicit-int (C and
+            Objective-C only)<br />-Wimplicit-function-declaration (C and Objective-C only)<br />-Winit-self (only for
+            C++)<br />-Wzero-length-bounds<br />-Wlogical-not-parentheses<br />-Wmain (only for C/ObjC and unless
             -ffreestanding)<br />-Wmaybe-uninitialized<br />-Wmemset-elt-size<br />-Wmemset-transposed-args<br />-Wmisleading-indentation
             (only for C/C++)<br />-Wmissing-attributes<br />-Wmissing-braces (only for
             C/ObjC)<br />-Wmultistatement-macros<br />-Wnarrowing (only for
@@ -689,31 +780,46 @@ gcc module.c -o module.o -c</code></pre>
         </p>
         <pre class="sh"><code>-Wextra</code></pre>
         <p>This enables some extra warning flags that are not enabled by -Wall. (This option used to be called -W. The
-            older name is still supported, but the newer name is more descriptive.)</p>
+            older
+            name is still supported, but the newer name is more descriptive.)</p>
         <p>The option -Wextra also prints warning messages for the following cases:</p>
         <p>A pointer is compared against integer zero with &lt;, &lt;=, &gt;, or &gt;=.<br />(C++ only) An enumerator
-            and a non-enumerator both appear in a conditional expression.<br />(C++ only) Ambiguous virtual
-            bases.<br />(C++ only) Subscripting an array that has been declared register.<br />(C++ only) Taking the
-            address of a variable that has been declared register.<br />(C++ only) A base class is not initialized in
-            the copy constructor of a derived class.</p>
+            and a
+            non-enumerator both appear in a conditional expression.<br />(C++ only) Ambiguous virtual bases.<br />(C++
+            only)
+            Subscripting an array that has been declared register.<br />(C++ only) Taking the address of a variable that
+            has
+            been declared register.<br />(C++ only) A base class is not initialized in the copy constructor of a derived
+            class.
+        </p>
         <pre class="sh"><code>-Wconversion</code></pre>
         <p>Warn for implicit conversions that may alter a value. This includes conversions between real and integer,
-            like abs (x) when x is double; conversions between signed and unsigned, like unsigned ui = -1; and
-            conversions to smaller types, like sqrtf (M_PI). Do not warn for explicit casts like abs ((int) x) and ui =
-            (unsigned) -1, or if the value is not changed by the conversion like in abs (2.0). Warnings about
-            conversions between signed and unsigned integers can be disabled by using -Wno-sign-conversion.</p>
+            like abs
+            (x) when x is double; conversions between signed and unsigned, like unsigned ui = -1; and conversions to
+            smaller
+            types, like sqrtf (M_PI). Do not warn for explicit casts like abs ((int) x) and ui = (unsigned) -1, or if
+            the value
+            is not changed by the conversion like in abs (2.0). Warnings about conversions between signed and unsigned
+            integers
+            can be disabled by using -Wno-sign-conversion.</p>
         <p>For C++, also warn for confusing overload resolution for user-defined conversions; and conversions that never
-            use a type conversion operator: conversions to void, the same type, a base class or a reference to them.
-            Warnings about conversions between signed and unsigned integers are disabled by default in C++ unless
-            -Wsign-conversion is explicitly enabled.</p>
+            use a
+            type conversion operator: conversions to void, the same type, a base class or a reference to them. Warnings
+            about
+            conversions between signed and unsigned integers are disabled by default in C++ unless -Wsign-conversion is
+            explicitly enabled.</p>
         <p>Warnings about conversion from arithmetic on a small type back to that type are only given with
-            -Warith-conversion.</p>
+            -Warith-conversion.
+        </p>
         <h2 id="why-is-arr-1-and-arr-1-different-though-arr-and-arr-point-to-the-same-location">Why is (arr + 1) and
-            (&amp;arr + 1) different though arr and &amp;arr point to the same location?</h2>
+            (&amp;arr +
+            1) different though arr and &amp;arr point to the same location?</h2>
         <p>They are different types.<br /><code>arr</code> is of the type int <code>*</code>, where as
-            <code>&amp;arr</code> is of the type <code>int (*)[size]</code>.</p>
+            <code>&amp;arr</code> is
+            of the type <code>int (*)[size]</code>.</p>
         <p>So, <code>&amp;arr</code> points to the entire array where as <code>arr</code> points to the first element of
-            the array.</p>
+            the
+            array.</p>
         <h2
             id="the-clockwisespiral-rule-by-david-anderson-there-is-a-technique-known-as-theclockwisespiral-rule-which-enables-any-c-programmer-to-parse-in-their-head-any-c-declaration">
             The
@@ -721,7 +827,8 @@ gcc module.c -o module.o -c</code></pre>
             Rule'' which enables any C programmer to parse in their head any C declaration!</h2>
         <p>There are three simple steps to follow:</p>
         <p>Starting with the unknown element, move in a spiral/clockwise direction; when ecountering the following
-            elements replace them with the corresponding english statements:</p>
+            elements
+            replace them with the corresponding english statements:</p>
         <ul>
             <li><code>[X] or []</code> =&gt; Array X size of... or Array undefined size of...<br /></li>
             <li><code>(type1, type2)</code>=&gt; function passing type1 and type2 returning...<br /></li>
@@ -779,42 +886,55 @@ Finally we <span class="kw">continue</span> and the only thing left is the word 
 
 References: ISO Sec. 6.4 H&amp;S Secs. 7.11.2,7.11.3 pp. 226-7</code></pre>
         <h2 id="can-a-const-variable-be-used-to-declare-the-size-of-an-array-in-c">Can a const variable be used to
-            declare the size of an array in C?</h2>
+            declare the
+            size of an array in C?</h2>
         <p>In C, const is a misnomer for read-only. const variables can change their value, e.g. it is perfectly okay to
-            declare</p>
+            declare
+        </p>
         <pre
             class="sourceCode C"><code class="sourceCode c"><span class="dt">const</span> <span class="dt">volatile</span> <span class="dt">int</span> timer_tick_register; <span class="co">/* A CPU register. */</span></code></pre>
         <p>which you can read and get a different value with each read, but not write to. The language specification
-            thus treats <code>const</code> qualified objects not as constant expressions suitable for array sizes.</p>
+            thus treats
+            <code>const</code> qualified objects not as constant expressions suitable for array sizes.</p>
         <p>In a very simple way because the compiler must know the dimension of the array at compilation time and since
-            you can initialize <code>const</code> variable at run time you can't do it. So the size of statically
-            declared arrays must be a constant expression and a <code>const</code> variable is not it. For constant
-            expression you should use either a macro (#define) or enum.</p>
+            you can
+            initialize <code>const</code> variable at run time you can't do it. So the size of statically declared
+            arrays must
+            be a constant expression and a <code>const</code> variable is not it. For constant expression you should use
+            either
+            a macro (#define) or enum.</p>
         <h2 id="when-and-for-what-purposes-should-the-const-keyword-be-used-in-c-for-variables">When and for what
-            purposes should the const keyword be used in C for variables?</h2>
+            purposes
+            should the const keyword be used in C for variables?</h2>
         <ul>
             <li>Always use const for function parameters passed by reference where the function does not modify (or
-                free) the data pointed to.</li>
+                free) the
+                data pointed to.</li>
         </ul>
         <pre
             class="sourceCode C"><code class="sourceCode c"><span class="dt">int</span> find(<span class="dt">const</span> <span class="dt">int</span> *data, size_t size, <span class="dt">int</span> value);</code></pre>
         <ul>
             <li>Always use const for constants that might otherwise be defined using a #define or an enum. The compiler
-                can locate the data in read-only memory (ROM) as a result (although the linker is often a better tool
-                for this purpose in embedded systems).</li>
+                can
+                locate the data in read-only memory (ROM) as a result (although the linker is often a better tool for
+                this
+                purpose in embedded systems).</li>
         </ul>
         <pre
             class="sourceCode C"><code class="sourceCode c"><span class="dt">const</span> <span class="dt">double</span> PI = <span class="fl">3.14</span>;</code></pre>
         <ul>
             <li>Never use const in a function prototype for a parameter passed by value. It has no meaning and is hence
-                just 'noise'.</li>
+                just
+                'noise'.</li>
         </ul>
         <p><code>C // don't add const to 'value' or 'size' int find(const int *data, size_t size, const int value);</code>
         </p>
         <ul>
             <li>Where appropriate, use const volatile on locations that cannot be changed by the program but might still
-                change. Hardware registers are the typical use case here, for example a status register that reflects a
-                device state:</li>
+                change.
+                Hardware registers are the typical use case here, for example a status register that reflects a device
+                state:
+            </li>
         </ul>
         <pre
             class="sourceCode C"><code class="sourceCode c"><span class="dt">const</span> <span class="dt">volatile</span> <span class="dt">int32_t</span> *DEVICE_STATUS =  (<span class="dt">int32_t</span>*) <span class="bn">0x100</span>;</code></pre>
@@ -823,35 +943,43 @@ References: ISO Sec. 6.4 H&amp;S Secs. 7.11.2,7.11.3 pp. 226-7</code></pre>
         <p>Functions declared in header files do not need to be declared extern. They are implicitly declared with
             &quot;extern&quot;.</p>
         <h2 id="difference-between-defining-a-variable-and-declaring-a-variable">Difference between defining a variable
-            and declaring a variable</h2>
+            and
+            declaring a variable</h2>
         <p>It is important to understand the <strong>difference between defining a variable and declaring a
-                variable:</strong></p>
+                variable:</strong>
+        </p>
         <ul>
             <li>A variable is declared when the compiler is informed that a variable exists (and this is its type); it
-                does not allocate the storage for the variable at that point.<br /></li>
+                does not
+                allocate the storage for the variable at that point.<br /></li>
             <li>A variable is defined when the compiler allocates the storage for the variable.</li>
         </ul>
         <p>You may declare a variable multiple times (though once is sufficient); you may only define it once within a
-            given scope. A variable definition is also a declaration, but not all variable declarations are definitions.
-        </p>
+            given
+            scope. A variable definition is also a declaration, but not all variable declarations are definitions.</p>
         <h2 id="best-way-to-declare-and-define-global-variables">Best way to declare and define global variables</h2>
         <p>The clean, reliable way to declare and define <code>global variables</code> is to use a header file to
-            contain an extern declaration of the variable.</p>
+            contain an
+            extern declaration of the variable.</p>
         <p>The header is included by the one source file that defines the variable and by all the source files that
-            reference the variable. For each program, one source file (and only one source file) defines the variable.
-            Similarly, one header file (and only one header file) should declare the variable. The header file is
-            crucial; it enables cross-checking between independent TUs (translation units — think source files) and
-            ensures consistency.</p>
+            reference
+            the variable. For each program, one source file (and only one source file) defines the variable. Similarly,
+            one
+            header file (and only one header file) should declare the variable. The header file is crucial; it enables
+            cross-checking between independent TUs (translation units — think source files) and ensures consistency.</p>
         <ul>
             <li>A header file only contains extern declarations of variables — never static or unqualified variable
                 definitions.<br />For any given variable, only one header file declares it (SPOT — Single Point of
-                Truth).<br /></li>
+                Truth).<br />
+            </li>
             <li>A source file never contains extern declarations of variables — source files always include the (sole)
-                header that declares them.<br /></li>
+                header
+                that declares them.<br /></li>
             <li>For any given variable, exactly one source file defines the variable, preferably initializing it too.
-                (Although there is no need to initialize explicitly to zero, it does no harm and can do some good,
-                because there can be only one initialized definition of a particular global variable in a
-                program).<br /></li>
+                (Although
+                there is no need to initialize explicitly to zero, it does no harm and can do some good, because there
+                can be
+                only one initialized definition of a particular global variable in a program).<br /></li>
             <li>The source file that defines the variable also includes the header to ensure that the definition and the
                 declaration are consistent.<br /></li>
             <li>A function should never need to declare a variable using extern.<br /></li>
@@ -859,39 +987,52 @@ References: ISO Sec. 6.4 H&amp;S Secs. 7.11.2,7.11.3 pp. 226-7</code></pre>
         </ul>
         <h2 id="what-is-external-linkage-and-internal-linkage">What is external linkage and internal linkage?</h2>
         <p>When you write an implementation file (.cpp, .cxx, etc) your compiler generates a <strong>translation
-                unit</strong>. This is the object file from your implementation file plus all the headers you #included
-            in it.</p>
+                unit</strong>.
+            This is the object file from your implementation file plus all the headers you #included in it.</p>
         <p>Internal linkage refers to everything only in <strong>scope of a translation unit.</strong></p>
         <p>External linkage refers to things that exist beyond a particular translation unit. In other words,
-            <strong>accessible through the whole program</strong>, which is the combination of all translation units (or
-            object files).</p>
+            <strong>accessible
+                through the whole program</strong>, which is the combination of all translation units (or object files).
+        </p>
         <p>You can explicitly control the linkage of a symbol by using the <code>extern</code> and <code>static</code>
-            keywords. <strong>If the linkage isn't specified then the default linkage is <code>extern</code> for
-                non-const symbols and <code>static</code> (internal) for <code>const</code> symbols.</strong></p>
+            keywords.
+            <strong>If the linkage isn't specified then the default linkage is <code>extern</code> for non-const symbols
+                and
+                <code>static</code> (internal) for <code>const</code> symbols.</strong></p>
         <h2 id="what-is-the-difference-between-scope-and-linkage">What is the difference between scope and linkage?</h2>
         <p>&quot;<code>scope</code>&quot; is a namespace of the compiler; &quot;<code>linkage</code>&quot; is about
-            compiled units.</p>
+            compiled
+            units.</p>
         <p>I explain a bit more: A variable declared in a function has the scope of that function, i.e. it is visible
-            only within that function. A variable declared as static in a source file, can be seen only by the code in
-            that source file (and all included files!). Variables can also have global scope: they can be referred to in
-            a source file, but not declared (allocated) in that source file but declared in another source file.</p>
+            only
+            within that function. A variable declared as static in a source file, can be seen only by the code in that
+            source
+            file (and all included files!). Variables can also have global scope: they can be referred to in a source
+            file, but
+            not declared (allocated) in that source file but declared in another source file.</p>
         <p>In stead of &quot;source file&quot; we should say &quot;compilation unit&quot; as it is the C source file
-            being compiled, plus all included files. Scope refers to everything the compiler can &quot;see&quot; in a
-            compilation unit. These are namespaces.</p>
+            being
+            compiled, plus all included files. Scope refers to everything the compiler can &quot;see&quot; in a
+            compilation
+            unit. These are namespaces.</p>
         <p><strong>After compilation of a project there are a number of object files, one for each compile
-                unit.</strong> Each may refer to variables used that are not declared in the compile unit. The linker
-            must now resolve these references between object files: linkage.</p>
+                unit.</strong> Each
+            may refer to variables used that are not declared in the compile unit. The linker must now resolve these
+            references
+            between object files: linkage.</p>
         <p>This also holds for functions.</p>
         <h2 id="how-can-i-access-structure-fields-by-name-at-run-time">How can I access structure fields by name at run
-            time?</h2>
+            time?
+        </h2>
         <p>A: Keep track of the field offsets as computed using the offsetof() macro (see question 2.14). If structp is
-            a pointer to an instance of the structure, and field f is an int having offset offsetf, f's value can be set
+            a
+            pointer to an instance of the structure, and field f is an int having offset offsetf, f's value can be set
             indirectly with</p>
         <p><code>*(int *)((char *)structp + offsetf) = value;</code></p>
         <h2 id="bit-fields-in-c">Bit Fields in C</h2>
         <p>In C, we can specify size (in bits) of structure and union members. The idea is to use memory efficiently
-            when we know that the value of a field or group of fields will never exceed a limit or is withing a small
-            range.</p>
+            when we
+            know that the value of a field or group of fields will never exceed a limit or is withing a small range.</p>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt; </span>
   
 <span class="co">// Space optimized representation of the date </span>
@@ -918,7 +1059,8 @@ References: ISO Sec. 6.4 H&amp;S Secs. 7.11.2,7.11.3 pp. 226-7</code></pre>
         <ul>
             <li>
                 <p>A special unnamed bit field of size 0 is used to force alignment on next boundary. For example
-                    consider the following program.</p>
+                    consider the
+                    following program.</p>
             </li>
             <li>
                 <p>We cannot have pointers to bit field members as they may not start at a byte boundary.</p>
@@ -928,7 +1070,8 @@ References: ISO Sec. 6.4 H&amp;S Secs. 7.11.2,7.11.3 pp. 226-7</code></pre>
             </li>
         </ul>
         <h2 id="is-there-a-quick-way-to-determine-endianness-of-your-machine">Is there a quick way to determine
-            endianness of your machine?</h2>
+            endianness of
+            your machine?</h2>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt; </span>
 <span class="dt">int</span> main()  
 { 
@@ -944,9 +1087,11 @@ References: ISO Sec. 6.4 H&amp;S Secs. 7.11.2,7.11.3 pp. 226-7</code></pre>
         <h2
             id="the-behavior-of-code-which-contains-multiple-ambiguous-side-effects-has-always-been-undefined.-loosely-speaking-by-multiple-ambiguous-side-effects-we-mean-any-combination-of-increment-decrement-and-assignment-operators------etc.-in-a-single-expression-which-causes-the-same-object-either-to-be-modified-twice-or-modified-and-then-inspected.">
             The behavior of code which contains multiple, ambiguous side effects has always been undefined. (Loosely
-            speaking, by ``multiple, ambiguous side effects'' we mean any combination of increment, decrement, and
-            assignment operators (++, --, =, +=, -=, etc.) in a single expression which causes the same object either to
-            be modified twice or modified and then inspected.</h2>
+            speaking,
+            by ``multiple, ambiguous side effects'' we mean any combination of increment, decrement, and assignment
+            operators
+            (++, --, =, +=, -=, etc.) in a single expression which causes the same object either to be modified twice or
+            modified and then inspected.</h2>
         <p><strong>Example:</strong></p>
         <pre class="sourceCode C"><code class="sourceCode c"><span class="dt">int</span> i = <span class="dv">3</span>;
 i = i++;</code></pre>
@@ -954,57 +1099,74 @@ i = i++;</code></pre>
         <h2 id="short-circuiting-behavior-in-c">short-circuiting behavior in C</h2>
         <p><code>while((c = getchar()) != EOF &amp;&amp; c != '\n')</code></p>
         <p>the right-hand side is not evaluated if the left-hand side determines the outcome (i.e. is true for || or
-            false for &amp;&amp;). Therefore, left-to-right evaluation is guaranteed, as it also is for the comma
-            operator . Furthermore, all of these operators (along with ?:) introduce an extra internal sequence point .
-        </p>
+            false for
+            &amp;&amp;). Therefore, left-to-right evaluation is guaranteed, as it also is for the comma operator .
+            Furthermore,
+            all of these operators (along with ?:) introduce an extra internal sequence point .</p>
         <h4 id="note-1">Note:</h4>
         <p><strong><code>printf(&quot;%d %d&quot;, f1(), f2());</code> call f2 first? I thought the comma operator
-                guaranteed left-to-right evaluation.</strong></p>
+                guaranteed
+                left-to-right evaluation.</strong></p>
         <p>The comma operator does guarantee left-to-right evaluation, but the commas separating the arguments in a
-            function call are not comma operators. The order of evaluation of the arguments to a function call is
-            unspecified.</p>
+            function
+            call are not comma operators. The order of evaluation of the arguments to a function call is unspecified.
+        </p>
         <h2 id="sequence-point">sequence point</h2>
         <p>A sequence point is a point in time at which the dust has settled and all side effects which have been seen
-            so far are guaranteed to be complete. The sequence points listed in the C standard are:</p>
+            so far
+            are guaranteed to be complete. The sequence points listed in the C standard are:</p>
         <ul>
             <li>at the end of the evaluation of a full expression (a full expression is an expression statement, or any
-                other expression which is not a subexpression within any larger expression);<br /></li>
+                other
+                expression which is not a subexpression within any larger expression);<br /></li>
             <li>at the ||, &amp;&amp;, ?:, and comma operators; and<br /></li>
             <li>at a function call (after the evaluation of all the arguments, and just before the actual call).</li>
         </ul>
         <h2
             id="how-can-i-avoid-these-undefined-evaluation-order-difficulties-if-i-dont-feel-like-learning-the-complicated-rules">
             How can I avoid these undefined evaluation order difficulties if I don't feel like learning the complicated
-            rules?</h2>
+            rules?
+        </h2>
         <p>A: The easiest answer is that if you steer clear of expressions which don't have reasonably obvious
-            interpretations, for the most part you'll steer clear of the undefined ones, too. (Of course, reasonably
-            obvious'' means different things to different people. This answer works as long as you agree that a[i] = i++
-            and i = i++ are not reasonably obvious.'')</p>
+            interpretations,
+            for the most part you'll steer clear of the undefined ones, too. (Of course, reasonably obvious'' means
+            different
+            things to different people. This answer works as long as you agree that a[i] = i++ and i = i++ are not
+            reasonably
+            obvious.'')</p>
         <p>To be a bit more precise, here are some simpler rules which, though slightly more conservative than the ones
-            in the Standard, will help to make sure that your code is ``reasonably obvious'' and equally understandable
-            to both the compiler and your fellow programmers:</p>
+            in the
+            Standard, will help to make sure that your code is ``reasonably obvious'' and equally understandable to both
+            the
+            compiler and your fellow programmers:</p>
         <ul>
             <li>Make sure that each expression modifies at most one object.<br /></li>
             <li>If an object (as defined above) appears more than once in an expression, and is the object modified in
-                the expression, make sure that all appearances of the object which fetch its value participate in the
-                computation of the new value which is stored.</li>
+                the
+                expression, make sure that all appearances of the object which fetch its value participate in the
+                computation of
+                the new value which is stored.</li>
         </ul>
         <h2 id="why-doesnt-this-code-int-a-1000-b-1000-long-int-c-a-b-work">Why doesn't this code
             <code>int a = 1000, b = 1000; long int c = a * b;</code> work?</h2>
         <p>Under <code>C</code>'s integral promotion rules, the multiplication is carried out using int arithmetic, and
-            the result may overflow or be truncated before being promoted and assigned to the long int left-hand side.
-            Use an explicit cast on at least one of the operands to force long arithmetic:</p>
+            the
+            result may overflow or be truncated before being promoted and assigned to the long int left-hand side. Use
+            an
+            explicit cast on at least one of the operands to force long arithmetic:</p>
         <pre><code>`long int c = (long int)a * b;`</code></pre>
         <p>or perhaps</p>
         <pre><code>`long int c = (long int)a * (long int)b;`</code></pre>
         <p>(both forms are equivalent).</p>
         <p>Notice that the expression (long int)(a * b) would not have the desired effect. An explicit cast of this form
-            (i.e. applied to the result of the multiplication) is equivalent to the implicit conversion which would
-            occur anyway when the value is assigned to the long int left-hand side, and like the implicit conversion, it
-            happens too late, after the damage has been done.</p>
+            (i.e.
+            applied to the result of the multiplication) is equivalent to the implicit conversion which would occur
+            anyway when
+            the value is assigned to the long int left-hand side, and like the implicit conversion, it happens too late,
+            after
+            the damage has been done.</p>
         <h2 id="to-do">TO DO:</h2>
 
-    </div>
 
 </body>
 
