@@ -1,57 +1,176 @@
-<h1 id="assembly---nasm">Assembly - NASM</h1>
-<h2 id="section"><code>$</code></h2>
-<p><code>$</code> is the address of the current position before emitting the bytes (if any) for the line it appears on.</p>
-<p><code>$ - msg</code> is like doing <code>here - msg</code>, i.e. the distance in bytes between the current position (at the end of the string) and the start of the string.</p>
-<h2 id="section-1"><code>$$</code></h2>
-<p><code>$$</code> refers to the address of the 1st line (where our section started).</p>
-<h2 id="data">Data</h2>
-<ul>
-<li>DB - Define Byte. 8 bits<br /></li>
-<li>DW - Define Word. Generally 2 bytes on a typical x86 32-bit system<br /></li>
-<li>DD - Define double word. Generally 4 bytes on a typical x86 32-bit system</li>
-</ul>
-<h2 id="what-does-the-h-suffix-mean">What does the 'h' suffix mean?</h2>
-<p>In x86 assembly, what does an h suffix on numbers represent?</p>
-<p>For example:</p>
-<p><code>sub CX, 13h</code></p>
-<p><strong>&quot;H&quot; for &quot;Hexadecimal&quot;</strong></p>
-<h2 id="registers">Registers</h2>
-<p>Modern (i.e 386 and beyond) x86 processors have eight 32-bit general purpose registers, as depicted in Figure 1. The register names are mostly historical. For example, EAX used to be called the accumulator since it was used by a number of arithmetic operations, and ECX was known as the counter since it was used to hold a loop index. Whereas most of the registers have lost their special purposes in the modern instruction set, by convention, two are reserved for special purposes — the stack pointer (ESP) and the base pointer (EBP).</p>
-<p>For the EAX, EBX, ECX, and EDX registers, subsections may be used. For example, the least significant 2 bytes of EAX can be treated as a 16-bit register called AX. The least significant byte of AX can be used as a single 8-bit register called AL, while the most significant byte of AX can be used as a single 8-bit register called AH. These names refer to the same physical register. When a two-byte quantity is placed into DX, the update affects the value of DH, DL, and EDX. These sub-registers are mainly hold-overs from older, 16-bit versions of the instruction set. However, they are sometimes convenient when dealing with data that are smaller than 32-bits (e.g. 1-byte ASCII characters).</p>
-<p>When referring to registers in assembly language, the names are not case-sensitive. For example, the names EAX and eax refer to the same register.</p>
-<p>AX is the 16 lower bits of EAX. AH is the 8 high bits of AX (i.e. the bits 8-15 of EAX) and AL is the least significant byte (bits 0-7) of EAX as well as AX.</p>
-<p>Example (Hexadecimal digits):</p>
-<p>EAX: 12 34 56 78<br />AX: 56 78<br />AH: 56<br />AL: 78</p>
-<h2 id="int-x86-instruction">INT (x86 instruction)</h2>
-<p>INT is an assembly language instruction for x86 processors that generates a software interrupt. It takes the interrupt number formatted as a byte value.[1]</p>
-<p>When written in assembly language, the instruction is written like this:</p>
-<p><code>INT X</code></p>
-<p>where X is the software interrupt that should be generated (0-255).</p>
-<p>Depending on the context, compiler, or assembler, a software interrupt number is often given as a hexadecimal value, sometimes with a prefix 0x or the suffix h. For example, INT 13H will generate the software interrupt 0x13 (19 in decimal), causing the function pointed to by the 20th vector in the interrupt table to be executed, which is typically a DOS API call.</p>
-<h2 id="int-10h">INT 10H</h2>
-<p>INT 10h, INT 10H or INT 16 is shorthand for BIOS interrupt call 10hex, the 17th interrupt vector in an x86-based computer system. The BIOS typically sets up a real mode interrupt handler at this vector that provides video services. Such services include setting the video mode, character and string output, and graphics primitives (reading and writing pixels in graphics mode).</p>
-<p>To use this call, load AH with the number of the desired subfunction, load other required parameters in other registers, and make the call. INT 10h is fairly slow, so many programs bypass this BIOS routine and access the display hardware directly. Setting the video mode, which is done infrequently, can be accomplished by using the BIOS, while drawing graphics on the screen in a game needs to be done quickly, so direct access to video RAM is more appropriate than making a BIOS call for every pixel.</p>
-<h2 id="defining-strings">Defining Strings</h2>
-<p>The convention is to declare strings as null-terminating, which means we always declare the last byte of the string as 0, as follows:</p>
-<pre class="asm"><code>my_string:
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="../fav.png" />
+
+    <meta charset="UTF-8">
+    <title>ASSEMBLY NOTES</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .task-list-item {
+            list-style-type: none;
+        }
+
+        .task-list-item-checkbox {
+            margin-left: -20px;
+            vertical-align: middle;
+        }
+    </style>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div style="padding-left: 60px; padding-right: 60px;">
+
+
+        <h1 id="assembly---nasm">Assembly - NASM</h1>
+        <h2 id="section"><code>$</code></h2>
+        <p><code>$</code> is the address of the current position before emitting the bytes (if any) for the line it
+            appears on.
+        </p>
+        <p><code>$ - msg</code> is like doing <code>here - msg</code>, i.e. the distance in bytes between the current
+            position
+            (at the end of the string) and the start of the string.</p>
+        <h2 id="section-1"><code>$$</code></h2>
+        <p><code>$$</code> refers to the address of the 1st line (where our section started).</p>
+        <h2 id="data">Data</h2>
+        <ul>
+            <li>DB - Define Byte. 8 bits<br /></li>
+            <li>DW - Define Word. Generally 2 bytes on a typical x86 32-bit system<br /></li>
+            <li>DD - Define double word. Generally 4 bytes on a typical x86 32-bit system</li>
+        </ul>
+        <h2 id="what-does-the-h-suffix-mean">What does the 'h' suffix mean?</h2>
+        <p>In x86 assembly, what does an h suffix on numbers represent?</p>
+        <p>For example:</p>
+        <p><code>sub CX, 13h</code></p>
+        <p><strong>&quot;H&quot; for &quot;Hexadecimal&quot;</strong></p>
+        <h2 id="registers">Registers</h2>
+        <p>Modern (i.e 386 and beyond) x86 processors have eight 32-bit general purpose registers, as depicted in Figure
+            1. The
+            register names are mostly historical. For example, EAX used to be called the accumulator since it was used
+            by a
+            number of arithmetic operations, and ECX was known as the counter since it was used to hold a loop index.
+            Whereas
+            most of the registers have lost their special purposes in the modern instruction set, by convention, two are
+            reserved for special purposes — the stack pointer (ESP) and the base pointer (EBP).</p>
+        <p>For the EAX, EBX, ECX, and EDX registers, subsections may be used. For example, the least significant 2 bytes
+            of EAX
+            can be treated as a 16-bit register called AX. The least significant byte of AX can be used as a single
+            8-bit
+            register called AL, while the most significant byte of AX can be used as a single 8-bit register called AH.
+            These
+            names refer to the same physical register. When a two-byte quantity is placed into DX, the update affects
+            the value
+            of DH, DL, and EDX. These sub-registers are mainly hold-overs from older, 16-bit versions of the instruction
+            set.
+            However, they are sometimes convenient when dealing with data that are smaller than 32-bits (e.g. 1-byte
+            ASCII
+            characters).</p>
+        <p>When referring to registers in assembly language, the names are not case-sensitive. For example, the names
+            EAX and
+            eax refer to the same register.</p>
+        <p>AX is the 16 lower bits of EAX. AH is the 8 high bits of AX (i.e. the bits 8-15 of EAX) and AL is the least
+            significant byte (bits 0-7) of EAX as well as AX.</p>
+        <p>Example (Hexadecimal digits):</p>
+        <p>EAX: 12 34 56 78<br />AX: 56 78<br />AH: 56<br />AL: 78</p>
+        <h2 id="int-x86-instruction">INT (x86 instruction)</h2>
+        <p>INT is an assembly language instruction for x86 processors that generates a software interrupt. It takes the
+            interrupt number formatted as a byte value.[1]</p>
+        <p>When written in assembly language, the instruction is written like this:</p>
+        <p><code>INT X</code></p>
+        <p>where X is the software interrupt that should be generated (0-255).</p>
+        <p>Depending on the context, compiler, or assembler, a software interrupt number is often given as a hexadecimal
+            value,
+            sometimes with a prefix 0x or the suffix h. For example, INT 13H will generate the software interrupt 0x13
+            (19 in
+            decimal), causing the function pointed to by the 20th vector in the interrupt table to be executed, which is
+            typically a DOS API call.</p>
+        <h2 id="int-10h">INT 10H</h2>
+        <p>INT 10h, INT 10H or INT 16 is shorthand for BIOS interrupt call 10hex, the 17th interrupt vector in an
+            x86-based
+            computer system. The BIOS typically sets up a real mode interrupt handler at this vector that provides video
+            services. Such services include setting the video mode, character and string output, and graphics primitives
+            (reading and writing pixels in graphics mode).</p>
+        <p>To use this call, load AH with the number of the desired subfunction, load other required parameters in other
+            registers, and make the call. INT 10h is fairly slow, so many programs bypass this BIOS routine and access
+            the
+            display hardware directly. Setting the video mode, which is done infrequently, can be accomplished by using
+            the
+            BIOS, while drawing graphics on the screen in a game needs to be done quickly, so direct access to video RAM
+            is more
+            appropriate than making a BIOS call for every pixel.</p>
+        <h2 id="defining-strings">Defining Strings</h2>
+        <p>The convention is to declare strings as null-terminating, which means we always declare the last byte of the
+            string
+            as 0, as follows:</p>
+        <pre class="asm"><code>my_string:
     db ’Booting OS’,0</code></pre>
-<p>When later iterating through a string, perhaps to print each of its characters in turn, we can easily determine when we have reached the end.</p>
-<h2 id="function-calls">Function Calls</h2>
-<p>At the CPU level a function is nothing more than a jump to the address of a useful routine then a jump back again to the instruction immediately following the first jump.</p>
-<p>The caller code could store the correct return address (i.e. the address immediately after the call) in some well-known location, then the called code could jump back to that stored address. The CPU keeps track of the current instruction being executed in the special register ip (instruction pointer), which, sadly, we cannot access directly. However, the CPU provides a pair of instructions, call and ret, which do exactly what we want: call behaves like jmp but additionally, before actually jumping, pushes the return address on to the stack; ret then pops the return address off the stack and jumps to it.</p>
-<p>When we call a function, such as a print function, within our assembly program, internally that function may alter the values of several registers to perform its job (indeed, with registers being a scarce resource, it will almost certainly do this), so when our program returns from the function call it may not be safe to assume, say, the value we stored in dx will still be there.</p>
-<p>It is often sensible (and polite), therefore, for a function immediately to push any registers it plans to alter onto the stack and then pop them off again (i.e. restore the registers’ original values) immediately before it returns. Since a function may use many of the general purpose registers, the CPU implements two convenient instructions, <code>pusha</code> and <code>popa</code>, that conveniently push and pop all registers to and from the stack respectively.</p>
-<p>Examlmple:</p>
-<pre class="asm"><code>some_function:
+        <p>When later iterating through a string, perhaps to print each of its characters in turn, we can easily
+            determine when
+            we have reached the end.</p>
+        <h2 id="function-calls">Function Calls</h2>
+        <p>At the CPU level a function is nothing more than a jump to the address of a useful routine then a jump back
+            again to
+            the instruction immediately following the first jump.</p>
+        <p>The caller code could store the correct return address (i.e. the address immediately after the call) in some
+            well-known location, then the called code could jump back to that stored address. The CPU keeps track of the
+            current
+            instruction being executed in the special register ip (instruction pointer), which, sadly, we cannot access
+            directly. However, the CPU provides a pair of instructions, call and ret, which do exactly what we want:
+            call
+            behaves like jmp but additionally, before actually jumping, pushes the return address on to the stack; ret
+            then pops
+            the return address off the stack and jumps to it.</p>
+        <p>When we call a function, such as a print function, within our assembly program, internally that function may
+            alter
+            the values of several registers to perform its job (indeed, with registers being a scarce resource, it will
+            almost
+            certainly do this), so when our program returns from the function call it may not be safe to assume, say,
+            the value
+            we stored in dx will still be there.</p>
+        <p>It is often sensible (and polite), therefore, for a function immediately to push any registers it plans to
+            alter onto
+            the stack and then pop them off again (i.e. restore the registers’ original values) immediately before it
+            returns.
+            Since a function may use many of the general purpose registers, the CPU implements two convenient
+            instructions,
+            <code>pusha</code> and <code>popa</code>, that conveniently push and pop all registers to and from the stack
+            respectively.</p>
+        <p>Examlmple:</p>
+        <pre class="asm"><code>some_function:
     pusha
     mov bx, 10 add bx, 20 mov ah, 0x0e int 0x10 popa
     ret</code></pre>
-<h2 id="include-files">Include Files</h2>
-<p>After slaving away even on the seemingly simplest of assembly routines, you will likely want to reuse your code in multiple programs. nasm allows you to include external files literally as follows:</p>
-<pre class="asm"><code>%include &quot;my_print_function.asm&quot; ; this will simply get replaced by 
+        <h2 id="include-files">Include Files</h2>
+        <p>After slaving away even on the seemingly simplest of assembly routines, you will likely want to reuse your
+            code in
+            multiple programs. nasm allows you to include external files literally as follows:</p>
+        <pre class="asm"><code>%include &quot;my_print_function.asm&quot; ; this will simply get replaced by 
 ; the contents of the file
 ...
 mov al, ’H’ ; Store ’H’ in al so our function will print it. 
 call my_print_function
 </code></pre>
-<p><strong>IMP: remember to include subroutines below the hang ie, jmp $</strong></p>
+        <p><strong>IMP: remember to include subroutines below the hang ie, jmp $</strong></p>
+
+    </div>
+
+</body>
+
+</html>
