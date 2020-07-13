@@ -30,6 +30,7 @@ address {
 	font-style: normal;
 }
 aside {
+	text-align: center;
 	float: right;
 	width: 45%;
 }
