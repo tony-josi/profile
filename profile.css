@@ -29,6 +29,10 @@ address {
 	display: inline;
 	font-style: normal;
 }
+aside {
+	float: right;
+	width: 45%;
+}
 cite, em {
 	font-style: italic;
 }
