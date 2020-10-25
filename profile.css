@@ -59,8 +59,9 @@ small {
 .div2_box {
     overflow: auto;
     padding: 1%;
-    border: 2px solid rgb(198, 198, 198);
+    border: 2px solid rgb(235, 235, 235);
     box-sizing: border-box;
+    box-shadow: 2px 3px rgb(246, 246, 246);
   }
 ::selection {
 	background-color: #fdd835;
