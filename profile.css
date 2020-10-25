@@ -56,6 +56,12 @@ small {
 	font-size: 0.8rem;
 	letter-spacing: 0.4rem;
 }
+.div2_box {
+    overflow: auto;
+    padding: 1%;
+    border: 2px solid rgb(198, 198, 198);
+    box-sizing: border-box;
+  }
 ::selection {
 	background-color: #fdd835;
 	color: #373737;
