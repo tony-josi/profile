@@ -57,6 +57,7 @@ small {
 	letter-spacing: 0.4rem;
 }
 .div2_box {
+	border-radius: 10px;
     overflow: auto;
     padding: 1%;
     border: 2px solid rgb(235, 235, 235);
