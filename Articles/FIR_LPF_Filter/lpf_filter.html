@@ -24,26 +24,26 @@
             response
             low
             pass filter using the simple moving average approach by deriving an approximation relation between the
-            filters
+            filter's
             cut-off frequency and the window size of the moving average.</p>
         <p><a href="https://en.wikipedia.org/wiki/Finite_impulse_response"><strong>Finite Impulse Response
                     (FIR)</strong></a>
-            filters are those filters that have fixed number of non zero output values when given an impulse signal as
+            filters are those filters that have a fixed number of non zero output values when given an impulse signal as
             input.
-            Compared to the Inifinte impluse response filters, FIRs are phase linear and uses convolution instead of
+            Compared to the Infinite  impulse  response filters, FIRs are phase linear and uses convolution instead of
             recursion.
             Using <a href="https://www.dspguide.com/ch6/2.htm"><strong>Convolution</strong></a> the output signal is
             obtained as
-            the convolution of the input signal and the impluse response <a
+            the convolution of the input signal and the impulse  response <a
                 href="https://www.dspguide.com/ch6/2.htm">[more]</a>. <a
-                href="https://en.wikipedia.org/wiki/Impulse_response"><strong>Impluse response</strong></a> of a filter
+                href="https://en.wikipedia.org/wiki/Impulse_response"><strong> impulse response</strong></a> of a filter
             is
             the
-            reponse or output of the filter when its fed with an impluse signal.</p>
+            response or output of the filter when it's fed with an impulse signal.</p>
         <h3 id="filter-design-approach">Filter Design Approach</h3>
         <p>The relation between cutoff frequency and the window size (block size) of the MA Filter can be obtained by
             analysing
-            the response produced by the filter (of any window size, say N) when an impluse signal is passed though it.
+            the response produced by the filter (of any window size, say N) when an impulsesignal is passed through it.
             Since
             the impulse function contains all frequencies, the impulse response defines the response of a linear
             time-invariant
@@ -52,7 +52,7 @@
             of MA Filter will look like a &quot;box&quot; as the average (window size N) of impulse amplitude is taken
             as
             the
-            amplitude of the output until number of samples reaches from 0 to N, if the impulse occurs at the sample
+            amplitude of the output until the number of samples reaches from 0 to N, if the impulse occurs at the sample
             zero in
             the
             input signal. The <a href="https://en.wikipedia.org/wiki/Discrete-time_Fourier_transform"><strong>Discrete
@@ -64,7 +64,7 @@
             at
             cut-off frequency to 1/sqrt(2) (ie, -3 dB); as the <strong>cut-off frequency</strong> is regarded as the
             frequency
-            at which the filter <strong>reduces amplitude of the input signal</strong> by 1/sqrt(2) [-3 dB]. That means
+            at which the filter <strong>reduces the amplitude of the input signal</strong> by 1/sqrt(2) [-3 dB]. That means
             if a
             signal of frequency equal to cut-off frequency enters the filter, then the filter reduces the amplitude of
             the
@@ -72,7 +72,7 @@
         <h3 id="deriving-the-frequency-response-of-a-moving-average-filter">Deriving the Frequency Response of a Moving
             Average
             Filter</h3>
-        <h4 id="impluse-response">Impluse Response</h4>
+        <h4 id="impluse-response">impulseResponse</h4>
         <table>
             <thead>
                 <tr>
@@ -91,10 +91,10 @@
                 </tr>
             </tbody>
         </table>
-        <p>The above image (right) show the reponse of an impulse signal at 40, thorugh an FIR LPF filter of window size
+        <p>The above image (right) shows the response of an impulse signal at 40, through an FIR LPF filter of window size
             9.
         </p>
-        <p>If <strong>N</strong> is the window size of the LPF filter, then the impluse response of the filter can be
+        <p>If <strong>N</strong> is the window size of the LPF filter, then the impulse response of the filter can be
             defined
             as:</p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/imp_resp.png?raw=true"
@@ -104,7 +104,7 @@
                 alt="2"></p>
         <h4 id="discrete-time-fourier-transform-of-impulse-signal">Discrete Time Fourier Transform of Impulse Signal
         </h4>
-        <p>The frequency reponse of the filter should be taken to analyse the filter characteristics. The discrete time
+        <p>The frequency response of the filter should be taken to analyse the filter characteristics. The discrete time
             fourier
             transform of the output signal of the filter reveals the frequency characteristics of the filter. Discrete
             time
@@ -116,7 +116,7 @@
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_2.png?raw=true"
                 alt="1">
         </p>
-        <p>The summation (sigma term) in the above equation can be considered as sum of a geometric series. </p>
+        <p>The summation (sigma term) in the above equation can be considered as the sum of a geometric series. </p>
         <blockquote>
             <p>The sum of a geometric series <img
                     src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/gs_1.svg?raw=true"
@@ -142,13 +142,13 @@
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_6.png?raw=true"
                 alt="1">
         </p>
-        <p>As we are only interested in the magnitude of the filter response and not its phase, we can leave out the
+        <p>As we are only interested in the magnitude of the filter response and not it's phase, we can leave out the
             exponents
             from the above equation and use the remaining part for the analysis of frequency response,</p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_7.png?raw=true"
                 alt="1">
         </p>
-        <p>So the above function defines the reponse amplitude of a signal of frequency ω, when passed through the
+        <p>So the above function defines the response amplitude of a signal of frequency ω, when passed through the
             filter.
             The
             cut-off frequency is defined as the frequency at which the energy of the signal reduces by −3 dB. Hence the
@@ -159,8 +159,8 @@
         <p>The above equation havent got any simple analytical solution. One method to approximate solutions for the
             above
             equation is to use <a href="https://en.wikipedia.org/wiki/Taylor_series"><strong>Taylor Series</strong></a>
-            representaion of <strong>F(ωc)</strong>.</p>
-        <p>If we approximate the <strong>F(ωc)</strong> to the first 3 oders/terms of the Taylor Series,</p>
+            representation of <strong>F(ωc)</strong>.</p>
+        <p>If we approximate the <strong>F(ωc)</strong> to the first 3 orders/terms of the Taylor Series,</p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_9.png?raw=true"
                 alt="1">
         </p>
@@ -181,7 +181,7 @@
             the above equation by replacing the constant with a variable <code>a</code>; </p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_15.png?raw=true"
                 alt="1"> </p>
-        <p>and substituting it in the frequency reponse and equating it to 1/sqrt(2) when limit N tends to infinity,</p>
+        <p>and substituting it in the frequency response and equating it to 1/sqrt(2) when limit N tends to infinity,</p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_12.png?raw=true"
                 alt="1"></p>
         <p>the above limit leads to,</p>
@@ -199,14 +199,14 @@
         <p>Replacing the above new constant in the cut-off frequency - window size equation gives,</p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_16.png?raw=true"
                 alt="1"></p>
-        <p>Converting continous time frequencing ω to the discrete time frequency f, where fs is the sampling frequency,
+        <p>Converting continuous time frequency ω to the discrete time frequency f, where fs is the sampling frequency,
         </p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_17.png?raw=true"
                 alt="1"></p>
         <p>Substituting the above equation becomes,</p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_18.png?raw=true"
                 alt="1"></p>
-        <p>Finally for a particular cut-off frequency <strong>f</strong>, window size <strong>N</strong> can be
+        <p>Finally, for a particular cut-off frequency <strong>f</strong>, window size <strong>N</strong> can be
             expressed
             as,
         </p>
@@ -214,7 +214,7 @@
                 alt="1"></p>
         <p>where fs is the sampling frequency.</p>
         <h3 id="fir-lpf-filter-implemented-in-software">FIR LPF Filter Implemented in Software</h3>
-        <p>The below C++ code snippet implements a FIR LPF filter using the simple moving average approach:</p>
+        <p>The below C++ code snippet implements an FIR LPF filter using the simple moving average approach:</p>
         <pre><code class="lang-C++"><span class="hljs-keyword">class</span> fir_lpf_MA_Filter {
 
     <span class="hljs-keyword">private</span>:
