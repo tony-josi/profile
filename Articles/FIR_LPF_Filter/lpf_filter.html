@@ -6,7 +6,8 @@
 
     <meta charset="UTF-8">
     <title>Designing &amp; Implementing a Finite Impulse Response (FIR) Low Pass Filter (LPF)</title>
-    <p style="padding-left: 60px; padding-right: 60px;"><a href="lpf_filter_bootstrapped.html">Bootstrapped Page </a></p>
+    <p style="padding-left: 60px; padding-right: 60px;"><a href="lpf_filter_bootstrapped.html">Bootstrapped Page </a>
+    </p>
 
 </head>
 
@@ -30,11 +31,11 @@
                     (FIR)</strong></a>
             filters are those filters that have a fixed number of non zero output values when given an impulse signal as
             input.
-            Compared to the Infinite  impulse  response filters, FIRs are phase linear and uses convolution instead of
+            Compared to the Infinite impulse response filters, FIRs are phase linear and uses convolution instead of
             recursion.
             Using <a href="https://www.dspguide.com/ch6/2.htm"><strong>Convolution</strong></a> the output signal is
             obtained as
-            the convolution of the input signal and the impulse  response <a
+            the convolution of the input signal and the impulse response <a
                 href="https://www.dspguide.com/ch6/2.htm">[more]</a>. <a
                 href="https://en.wikipedia.org/wiki/Impulse_response"><strong> impulse response</strong></a> of a filter
             is
@@ -45,9 +46,14 @@
             analysing
             the response produced by the filter (of any window size, say N) when an impulsesignal is passed through it.
             <strong>Since
-            the impulse function contains all frequencies, the impulse response defines the response of a linear
-            time-invariant
-            system for all frequencies</strong> <a href="https://en.wikipedia.org/wiki/Impulse_response">[more]</a> <a href="https://dsp.stackexchange.com/questions/536/what-is-meant-by-a-systems-impulse-response-and-frequency-response">[refer 1]</a> <a href="https://dsp.stackexchange.com/questions/11282/for-an-lti-system-why-does-the-fourier-transform-of-the-impulse-response-give-t">[refer 2]</a>. The impulse
+                the impulse function contains all frequencies, the impulse response defines the response of a linear
+                time-invariant
+                system for all frequencies</strong> <a href="https://en.wikipedia.org/wiki/Impulse_response">[more]</a>
+            <a
+                href="https://dsp.stackexchange.com/questions/536/what-is-meant-by-a-systems-impulse-response-and-frequency-response">[refer
+                1]</a> <a
+                href="https://dsp.stackexchange.com/questions/11282/for-an-lti-system-why-does-the-fourier-transform-of-the-impulse-response-give-t">[refer
+                2]</a>. The impulse
             response
             of MA Filter will look like a &quot;box&quot; as the average (window size N) of impulse amplitude is taken
             as
@@ -58,13 +64,15 @@
             input signal. The <a href="https://en.wikipedia.org/wiki/Discrete-time_Fourier_transform"><strong>Discrete
                     Time
                     Fourier Transform (DTFT)</strong></a> of the output signal of the filter reveals the frequency
-            characteristics of the filter (Frequency response).</p>
+            characteristics of the filter (Frequency response).
+        </p>
         <p>To find the cut off frequency of a filter of Window size N, equate the frequency response function of the
             filter
             at
             cut-off frequency to 1/sqrt(2) (ie, -3 dB); as the <strong>cut-off frequency</strong> is regarded as the
             frequency
-            at which the filter <strong>reduces the amplitude of the input signal</strong> by 1/sqrt(2) [-3 dB]. That means
+            at which the filter <strong>reduces the amplitude of the input signal</strong> by 1/sqrt(2) [-3 dB]. That
+            means
             if a
             signal of frequency equal to cut-off frequency enters the filter, then the filter reduces the amplitude of
             the
@@ -91,7 +99,8 @@
                 </tr>
             </tbody>
         </table>
-        <p>The above image (right) shows the response of an impulse signal at 40, through an FIR LPF filter of window size
+        <p>The above image (right) shows the response of an impulse signal at 40, through an FIR LPF filter of window
+            size
             9.
         </p>
         <p>If <strong>N</strong> is the window size of the LPF filter, then the impulse response of the filter can be
@@ -181,7 +190,8 @@
             the above equation by replacing the constant with a variable <code>a</code>; </p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_15.png?raw=true"
                 alt="1"> </p>
-        <p>and substituting it in the frequency response and equating it to 1/sqrt(2) when limit N tends to infinity,</p>
+        <p>and substituting it in the frequency response and equating it to 1/sqrt(2) when limit N tends to infinity,
+        </p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_12.png?raw=true"
                 alt="1"></p>
         <p>the above limit leads to,</p>
