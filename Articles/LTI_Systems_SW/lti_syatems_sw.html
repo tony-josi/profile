@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="../../index_images/fav.png" />
+
+    <meta charset="UTF-8">
+    <title>SW Implementatoin of any LTI System from its difference equation</title>
+    </p>
+
+</head>
+
+<body>
+    <div style="padding-left: 60px; padding-right: 60px;">
+
+        <h1 id="sw-implementatoin-of-any-lti-system-from-its-constant-coefficient-difference-equation">Software Implementation
+            of any LTI System from its Constant-Coefficient Difference Equation</h1>
+        <p>A <strong><a href="https://en.wikipedia.org/wiki/Linear_time-invariant_system">Linear time-invariant
+                    system</a></strong> is a system that obeys the following fundamental properties:</p>
+        <ol>
+            <li>Linearity: The input and output relationship of the system is based on linear differenctial eqautions.
+                If the system maps inputs x1(t) and x2(t) to outputs y1(t) and y2(t) respectively, then it will map
+                x3(t) = x1(t) + x2(t) to the output y3(t) where y3(t) = y1(t) + y2(t). (superposition principle)</li>
+            <li>Time invariance: Time invariance means that the output of the system does not depend on the particular
+                time the input is applied.</li>
+        </ol>
+        <p><strong>The fundamental result of the LTI system is that it can be characterized entirely by the systems
+                impulse response.</strong></p>
+        <p>The output of the system can be obtained by <strong><a
+                    href="https://en.wikipedia.org/wiki/Convolution">convolving</a></strong> the input with the impulse
+            response or vice versa. </p>
+        <p>This article aims at developing a simple software library that can realise any LTI system from its
+            Constant-Coefficient Difference Equation defined as: </p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/1.png?raw=true"
+                alt="1"></p>
+
+        <p>If the recursive and non-recursive part of the above general Constant-Coefficient Difference Equation is
+            interchanged the overall system response remains the same as the convolution of two impulse response is
+            commutative.</p>
+        <p>Non-Recursive System,</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/2.png?raw=true"
+                alt="1"></p>
+
+        <p>Recursive System,</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/3.png?raw=true"
+                alt="1"></p>
+
+        <p>The above order of the system can be interchnages without changing the system response as,</p>
+        <p>Recursive System,</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/4.png?raw=true"
+                alt="1"></p>
+
+        <p>Non-Recursive System,</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/5.png?raw=true"
+                alt="1"></p>
+
+        <p>The above form reduces the number of delays (memory) required to implement the system. (No. of delays =
+            max{M, N} delays.)</p>
+        <p>The following code snippet implements the above form of LTI System that can be configured depending upon the
+            difference equation of the system.</p>
+        <pre><code class="lang-C"><span class="hljs-comment">#include &lt;stdlib.h&gt;</span>
+
+typedef struct _lti_sys {
+
+    <span class="hljs-comment">/* data */</span>
+    <span class="hljs-keyword">int</span> M, N, delay_mem_size;
+    <span class="hljs-keyword">float</span> *coeff_buffer_a, *coeff_buffer_b;
+    <span class="hljs-keyword">float</span> *__delay_mem_buffer;
+    <span class="hljs-keyword">int</span> __delay_buffer_head_index;
+
+} LTI_Sys;
+
+<span class="hljs-keyword">int</span> LTI_Sys_Init(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">int</span> M, <span class="hljs-keyword">int</span> N);
+<span class="hljs-keyword">int</span> LTI_Sys_Set_Initial_State(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> *init_state, <span class="hljs-keyword">int</span> size);
+<span class="hljs-keyword">int</span> LTI_Sys_Set_Coeff(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> *coeff_a, <span class="hljs-keyword">float</span> *coeff_b, <span class="hljs-keyword">int</span> size_a, <span class="hljs-keyword">int</span> size_b);
+<span class="hljs-keyword">int</span> LTI_Sys_Process(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> ip, <span class="hljs-keyword">float</span> *op);
+<span class="hljs-keyword">int</span> LTI_Sys_Reset(LTI_Sys *lti_sys_handle);
+<span class="hljs-keyword">int</span> LTI_Sys_Free(LTI_Sys *lti_sys_handle);
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __get_delay_mem(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">float</span> *op_val);
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __update_delay_mem(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> data_value);
+
+<span class="hljs-keyword">int</span> LTI_Sys_Init(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">int</span> M, <span class="hljs-keyword">int</span> N) {
+
+    <span class="hljs-keyword">if</span> (M == <span class="hljs-number">0</span> &amp;&amp; N == <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+
+    lti_sys_handle-&gt;delay_mem_size = M &gt;= N ? M : N;
+    lti_sys_handle-&gt;M = M;
+    lti_sys_handle-&gt;N = N;
+    lti_sys_handle-&gt;__delay_buffer_head_index = <span class="hljs-number">0</span>;
+    lti_sys_handle-&gt;__delay_mem_buffer = <span class="hljs-keyword">NULL</span>;
+    lti_sys_handle-&gt;coeff_buffer_a = <span class="hljs-keyword">NULL</span>;
+    lti_sys_handle-&gt;coeff_buffer_b = <span class="hljs-keyword">NULL</span>;
+
+    <span class="hljs-keyword">if</span>((lti_sys_handle-&gt;__delay_mem_buffer = malloc(sizeof(<span class="hljs-keyword">float</span>) * lti_sys_handle-&gt;delay_mem_size)) == <span class="hljs-keyword">NULL</span>) 
+        <span class="hljs-keyword">goto</span> free_n_exit_error;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;delay_mem_size; ++i) {
+        lti_sys_handle-&gt;__delay_mem_buffer[i] = <span class="hljs-number">0.</span>;
+    }
+
+    <span class="hljs-keyword">if</span>(lti_sys_handle-&gt;N &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">if</span>((lti_sys_handle-&gt;coeff_buffer_a = malloc(sizeof(<span class="hljs-keyword">float</span>) * lti_sys_handle-&gt;N)) == <span class="hljs-keyword">NULL</span>)
+            <span class="hljs-keyword">goto</span> free_n_exit_error;
+
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;N; ++i) {
+            lti_sys_handle-&gt;coeff_buffer_a[i] = <span class="hljs-number">0.</span>;
+        }
+    }
+
+    <span class="hljs-keyword">if</span>(lti_sys_handle-&gt;M &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">if</span>((lti_sys_handle-&gt;coeff_buffer_b = malloc(sizeof(<span class="hljs-keyword">float</span>) * lti_sys_handle-&gt;M)) == <span class="hljs-keyword">NULL</span>)
+            <span class="hljs-keyword">goto</span> free_n_exit_error;
+
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;M; ++i) {
+            lti_sys_handle-&gt;coeff_buffer_b[i] = <span class="hljs-number">0.</span>;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    free_n_exit_error:
+        free(lti_sys_handle-&gt;__delay_mem_buffer);
+        free(lti_sys_handle-&gt;coeff_buffer_a);
+        free(lti_sys_handle-&gt;coeff_buffer_b);
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+
+}
+
+<span class="hljs-keyword">int</span> LTI_Sys_Set_Initial_State(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> *init_state, <span class="hljs-keyword">int</span> size) {
+
+    <span class="hljs-keyword">if</span>(size &gt; lti_sys_handle-&gt;delay_mem_size)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++i) {
+        lti_sys_handle-&gt;__delay_mem_buffer[lti_sys_handle-&gt;delay_mem_size - i - <span class="hljs-number">1</span>] = init_state[i];
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+}
+
+<span class="hljs-keyword">int</span> LTI_Sys_Set_Coeff(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> *coeff_a, <span class="hljs-keyword">float</span> *coeff_b, <span class="hljs-keyword">int</span> size_a, <span class="hljs-keyword">int</span> size_b) {
+
+    <span class="hljs-keyword">if</span>(size_a &gt; lti_sys_handle-&gt;N || size_b &gt; lti_sys_handle-&gt;M)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size_a; ++i)
+        lti_sys_handle-&gt;coeff_buffer_a[i] = coeff_a[i];
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size_b; ++i)
+        lti_sys_handle-&gt;coeff_buffer_b[i] = coeff_b[i];
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+}
+
+<span class="hljs-keyword">int</span> LTI_Sys_Process(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> ip, <span class="hljs-keyword">float</span> *op) {
+
+    <span class="hljs-keyword">float</span> op_val = ip, tmp_coeff = <span class="hljs-number">0.</span>, tmp_op_val = <span class="hljs-number">0.</span>;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;N; ++i) {
+        <span class="hljs-keyword">if</span>(!__get_delay_mem(lti_sys_handle,i, &amp;tmp_coeff))
+            op_val += lti_sys_handle-&gt;coeff_buffer_a[i] * tmp_coeff;
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    }
+
+    tmp_op_val = op_val;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;M; ++i) {
+        <span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span>)
+            op_val = lti_sys_handle-&gt;coeff_buffer_b[i] * op_val;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(!__get_delay_mem(lti_sys_handle, i, &amp;tmp_coeff))
+            op_val += lti_sys_handle-&gt;coeff_buffer_b[i] * tmp_coeff;
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    }
+
+    <span class="hljs-keyword">if</span>(__update_delay_mem(lti_sys_handle, tmp_op_val))
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+
+    *op = op_val;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+}
+
+<span class="hljs-keyword">int</span> LTI_Sys_Reset(LTI_Sys *lti_sys_handle) {
+
+    lti_sys_handle-&gt;__delay_buffer_head_index = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;delay_mem_size; ++i) {
+        lti_sys_handle-&gt;__delay_mem_buffer[i] = <span class="hljs-number">0.</span>;
+    }
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;N; ++i) {
+        lti_sys_handle-&gt;coeff_buffer_a[i] = <span class="hljs-number">0.</span>;
+    }
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;M; ++i) {
+        lti_sys_handle-&gt;coeff_buffer_b[i] = <span class="hljs-number">0.</span>;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+}
+
+<span class="hljs-keyword">int</span> LTI_Sys_Free(LTI_Sys *lti_sys_handle) {
+
+    LTI_Sys_Reset(lti_sys_handle);
+
+    free(lti_sys_handle-&gt;__delay_mem_buffer);
+    free(lti_sys_handle-&gt;coeff_buffer_a);
+    free(lti_sys_handle-&gt;coeff_buffer_b);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+}
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __get_delay_mem(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">float</span> *op_val) {
+
+    *op_val = lti_sys_handle-&gt;__delay_mem_buffer[(index + lti_sys_handle-&gt;__delay_buffer_head_index) % lti_sys_handle-&gt;delay_mem_size];
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+}
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __update_delay_mem(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> data_value) {
+
+    <span class="hljs-keyword">if</span>(lti_sys_handle-&gt;__delay_buffer_head_index == <span class="hljs-number">0</span>)
+        lti_sys_handle-&gt;__delay_buffer_head_index = lti_sys_handle-&gt;delay_mem_size - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">else</span>
+        lti_sys_handle-&gt;__delay_buffer_head_index -= <span class="hljs-number">1</span>;
+
+    lti_sys_handle-&gt;__delay_mem_buffer[lti_sys_handle-&gt;__delay_buffer_head_index] = data_value;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+}
+</code></pre>
+
+
+
+
+    </div>
+
+</body>
+
+</html>
