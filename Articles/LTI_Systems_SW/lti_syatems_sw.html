@@ -20,10 +20,12 @@
         <p>A <strong><a href="https://en.wikipedia.org/wiki/Linear_time-invariant_system">Linear time-invariant
                     system</a></strong> is a system that obeys the following fundamental properties:</p>
         <ol>
-            <li><b>Linearity</b>: The input and output relationship of the system is based on linear differenctial eqautions.
+            <li><b>Linearity</b>: The input and output relationship of the system is based on linear differenctial
+                eqautions.
                 If the system maps inputs x1(t) and x2(t) to outputs y1(t) and y2(t) respectively, then it will map
                 x3(t) = x1(t) + x2(t) to the output y3(t) where y3(t) = y1(t) + y2(t). (superposition principle)</li>
-            <li><b>Time invariance</b>: Time invariance means that the output of the system does not depend on the particular
+            <li><b>Time invariance</b>: Time invariance means that the output of the system does not depend on the
+                particular
                 time the input is applied.</li>
         </ol>
         <p><strong>The fundamental result of the LTI system is that it can be characterized entirely by the systems
@@ -60,201 +62,399 @@
             max{M, N} delays.)</p>
         <p>The following code snippet implements the above form of LTI System that can be configured depending upon the
             difference equation of the system.</p>
-        <pre><code class="lang-C"><span class="hljs-comment">#include &lt;stdlib.h&gt;</span>
 
-typedef struct _lti_sys {
 
-    <span class="hljs-comment">/* data */</span>
-    <span class="hljs-keyword">int</span> M, N, delay_mem_size;
-    <span class="hljs-keyword">float</span> *coeff_buffer_a, *coeff_buffer_b;
-    <span class="hljs-keyword">float</span> *__delay_mem_buffer;
-    <span class="hljs-keyword">int</span> __delay_buffer_head_index;
+
+        <!-- HTML generated using hilite.me -->
+        <div
+            style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+            <table>
+                <tr>
+                    <td>
+                        <pre style="margin: 0; line-height: 125%">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177</pre>
+                    </td>
+                    <td>
+                        <pre style="margin: 0; line-height: 125%"><span style="color: #557799">#include &lt;stdlib.h&gt;</span>
+
+<span style="color: #008800; font-weight: bold">typedef</span> <span style="color: #008800; font-weight: bold">struct</span> _lti_sys {
+
+    <span style="color: #888888">/* data */</span>
+    <span style="color: #333399; font-weight: bold">int</span> M, N, delay_mem_size;
+    <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>coeff_buffer_a, <span style="color: #333333">*</span>coeff_buffer_b;
+    <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>__delay_mem_buffer;
+    <span style="color: #333399; font-weight: bold">int</span> __delay_buffer_head_index;
 
 } LTI_Sys;
 
-<span class="hljs-keyword">int</span> LTI_Sys_Init(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">int</span> M, <span class="hljs-keyword">int</span> N);
-<span class="hljs-keyword">int</span> LTI_Sys_Set_Initial_State(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> *init_state, <span class="hljs-keyword">int</span> size);
-<span class="hljs-keyword">int</span> LTI_Sys_Set_Coeff(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> *coeff_a, <span class="hljs-keyword">float</span> *coeff_b, <span class="hljs-keyword">int</span> size_a, <span class="hljs-keyword">int</span> size_b);
-<span class="hljs-keyword">int</span> LTI_Sys_Process(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> ip, <span class="hljs-keyword">float</span> *op);
-<span class="hljs-keyword">int</span> LTI_Sys_Reset(LTI_Sys *lti_sys_handle);
-<span class="hljs-keyword">int</span> LTI_Sys_Free(LTI_Sys *lti_sys_handle);
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Init</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">int</span> M, <span style="color: #333399; font-weight: bold">int</span> N);
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Set_Initial_State</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>init_state, <span style="color: #333399; font-weight: bold">int</span> size);
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Set_Coeff</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>coeff_a, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>coeff_b, <span style="color: #333399; font-weight: bold">int</span> size_a, <span style="color: #333399; font-weight: bold">int</span> size_b);
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Process</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">float</span> ip, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>op);
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Reset</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle);
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Free</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle);
 
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __get_delay_mem(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">float</span> *op_val);
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __update_delay_mem(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> data_value);
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">__get_delay_mem</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">int</span> index, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>op_val);
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">__update_delay_mem</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">float</span> data_value);
 
-<span class="hljs-keyword">int</span> LTI_Sys_Init(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">int</span> M, <span class="hljs-keyword">int</span> N) {
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Init</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">int</span> M, <span style="color: #333399; font-weight: bold">int</span> N) {
 
-    <span class="hljs-keyword">if</span> (M == <span class="hljs-number">0</span> &amp;&amp; N == <span class="hljs-number">0</span>)
-        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span style="color: #008800; font-weight: bold">if</span> (M <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span> <span style="color: #333333">&amp;&amp;</span> N <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+        <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
 
-    lti_sys_handle-&gt;delay_mem_size = M &gt;= N ? M : N;
-    lti_sys_handle-&gt;M = M;
-    lti_sys_handle-&gt;N = N;
-    lti_sys_handle-&gt;__delay_buffer_head_index = <span class="hljs-number">0</span>;
-    lti_sys_handle-&gt;__delay_mem_buffer = <span class="hljs-keyword">NULL</span>;
-    lti_sys_handle-&gt;coeff_buffer_a = <span class="hljs-keyword">NULL</span>;
-    lti_sys_handle-&gt;coeff_buffer_b = <span class="hljs-keyword">NULL</span>;
+    lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size <span style="color: #333333">=</span> M <span style="color: #333333">&gt;=</span> N <span style="color: #333333">?</span> M <span style="color: #333333">:</span> N;
+    lti_sys_handle<span style="color: #333333">-&gt;</span>M <span style="color: #333333">=</span> M;
+    lti_sys_handle<span style="color: #333333">-&gt;</span>N <span style="color: #333333">=</span> N;
+    lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_buffer_head_index <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+    lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+    lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
+    lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
 
-    <span class="hljs-keyword">if</span>((lti_sys_handle-&gt;__delay_mem_buffer = malloc(sizeof(<span class="hljs-keyword">float</span>) * lti_sys_handle-&gt;delay_mem_size)) == <span class="hljs-keyword">NULL</span>) 
-        <span class="hljs-keyword">goto</span> free_n_exit_error;
+    <span style="color: #008800; font-weight: bold">if</span>((lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer <span style="color: #333333">=</span> malloc(<span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #333399; font-weight: bold">float</span>) <span style="color: #333333">*</span> lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size)) <span style="color: #333333">==</span> <span style="color: #007020">NULL</span>) 
+        <span style="color: #008800; font-weight: bold">goto</span> free_n_exit_error;
 
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;delay_mem_size; ++i) {
-        lti_sys_handle-&gt;__delay_mem_buffer[i] = <span class="hljs-number">0.</span>;
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size; <span style="color: #333333">++</span>i) {
+        lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer[i] <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>;
     }
 
-    <span class="hljs-keyword">if</span>(lti_sys_handle-&gt;N &gt; <span class="hljs-number">0</span>) {
-        <span class="hljs-keyword">if</span>((lti_sys_handle-&gt;coeff_buffer_a = malloc(sizeof(<span class="hljs-keyword">float</span>) * lti_sys_handle-&gt;N)) == <span class="hljs-keyword">NULL</span>)
-            <span class="hljs-keyword">goto</span> free_n_exit_error;
-
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;N; ++i) {
-            lti_sys_handle-&gt;coeff_buffer_a[i] = <span class="hljs-number">0.</span>;
+    <span style="color: #008800; font-weight: bold">if</span>(lti_sys_handle<span style="color: #333333">-&gt;</span>N <span style="color: #333333">&gt;</span> <span style="color: #0000DD; font-weight: bold">0</span>) {
+        <span style="color: #008800; font-weight: bold">if</span>((lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a <span style="color: #333333">=</span> malloc(<span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #333399; font-weight: bold">float</span>) <span style="color: #333333">*</span> lti_sys_handle<span style="color: #333333">-&gt;</span>N)) <span style="color: #333333">==</span> <span style="color: #007020">NULL</span>)
+            <span style="color: #008800; font-weight: bold">goto</span> free_n_exit_error;
+        
+        <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>N; <span style="color: #333333">++</span>i) {
+            lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a[i] <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>;
         }
     }
 
-    <span class="hljs-keyword">if</span>(lti_sys_handle-&gt;M &gt; <span class="hljs-number">0</span>) {
-        <span class="hljs-keyword">if</span>((lti_sys_handle-&gt;coeff_buffer_b = malloc(sizeof(<span class="hljs-keyword">float</span>) * lti_sys_handle-&gt;M)) == <span class="hljs-keyword">NULL</span>)
-            <span class="hljs-keyword">goto</span> free_n_exit_error;
+    <span style="color: #008800; font-weight: bold">if</span>(lti_sys_handle<span style="color: #333333">-&gt;</span>M <span style="color: #333333">&gt;</span> <span style="color: #0000DD; font-weight: bold">0</span>) {
+        <span style="color: #008800; font-weight: bold">if</span>((lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b <span style="color: #333333">=</span> malloc(<span style="color: #008800; font-weight: bold">sizeof</span>(<span style="color: #333399; font-weight: bold">float</span>) <span style="color: #333333">*</span> lti_sys_handle<span style="color: #333333">-&gt;</span>M)) <span style="color: #333333">==</span> <span style="color: #007020">NULL</span>)
+            <span style="color: #008800; font-weight: bold">goto</span> free_n_exit_error;
 
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;M; ++i) {
-            lti_sys_handle-&gt;coeff_buffer_b[i] = <span class="hljs-number">0.</span>;
+        <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>M; <span style="color: #333333">++</span>i) {
+            lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b[i] <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>;
         }
     }
 
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
 
-    free_n_exit_error:
-        free(lti_sys_handle-&gt;__delay_mem_buffer);
-        free(lti_sys_handle-&gt;coeff_buffer_a);
-        free(lti_sys_handle-&gt;coeff_buffer_b);
-        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
-
-}
-
-<span class="hljs-keyword">int</span> LTI_Sys_Set_Initial_State(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> *init_state, <span class="hljs-keyword">int</span> size) {
-
-    <span class="hljs-keyword">if</span>(size &gt; lti_sys_handle-&gt;delay_mem_size)
-        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
-
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++i) {
-        lti_sys_handle-&gt;__delay_mem_buffer[lti_sys_handle-&gt;delay_mem_size - i - <span class="hljs-number">1</span>] = init_state[i];
-    }
-
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span style="color: #997700; font-weight: bold">free_n_exit_error:</span>
+        free(lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer);
+        free(lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a);
+        free(lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b);
+        <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
 
 }
 
-<span class="hljs-keyword">int</span> LTI_Sys_Set_Coeff(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> *coeff_a, <span class="hljs-keyword">float</span> *coeff_b, <span class="hljs-keyword">int</span> size_a, <span class="hljs-keyword">int</span> size_b) {
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Set_Initial_State</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>init_state, <span style="color: #333399; font-weight: bold">int</span> size) {
 
-    <span class="hljs-keyword">if</span>(size_a &gt; lti_sys_handle-&gt;N || size_b &gt; lti_sys_handle-&gt;M)
-        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+    <span style="color: #008800; font-weight: bold">if</span>(size <span style="color: #333333">&gt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size)
+        <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
 
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size_a; ++i)
-        lti_sys_handle-&gt;coeff_buffer_a[i] = coeff_a[i];
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size_b; ++i)
-        lti_sys_handle-&gt;coeff_buffer_b[i] = coeff_b[i];
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> size; <span style="color: #333333">++</span>i) {
+        lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer[lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size <span style="color: #333333">-</span> i <span style="color: #333333">-</span> <span style="color: #0000DD; font-weight: bold">1</span>] <span style="color: #333333">=</span> init_state[i];
+    }
 
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
 
 }
 
-<span class="hljs-keyword">int</span> LTI_Sys_Process(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> ip, <span class="hljs-keyword">float</span> *op) {
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Set_Coeff</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>coeff_a, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>coeff_b, <span style="color: #333399; font-weight: bold">int</span> size_a, <span style="color: #333399; font-weight: bold">int</span> size_b) {
 
-    <span class="hljs-keyword">float</span> op_val = ip, tmp_coeff = <span class="hljs-number">0.</span>, tmp_op_val = <span class="hljs-number">0.</span>;
+    <span style="color: #008800; font-weight: bold">if</span>(size_a <span style="color: #333333">&gt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>N <span style="color: #333333">||</span> size_b <span style="color: #333333">&gt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>M)
+        <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
 
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;N; ++i) {
-        <span class="hljs-keyword">if</span>(!__get_delay_mem(lti_sys_handle,i, &amp;tmp_coeff))
-            op_val += lti_sys_handle-&gt;coeff_buffer_a[i] * tmp_coeff;
-        <span class="hljs-keyword">else</span>
-            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
-    }
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> size_a; <span style="color: #333333">++</span>i)
+        lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a[i] <span style="color: #333333">=</span> coeff_a[i];
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> size_b; <span style="color: #333333">++</span>i)
+        lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b[i] <span style="color: #333333">=</span> coeff_b[i];
 
-    tmp_op_val = op_val;
-
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;M; ++i) {
-        <span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span>)
-            op_val = lti_sys_handle-&gt;coeff_buffer_b[i] * op_val;
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(!__get_delay_mem(lti_sys_handle, i, &amp;tmp_coeff))
-            op_val += lti_sys_handle-&gt;coeff_buffer_b[i] * tmp_coeff;
-        <span class="hljs-keyword">else</span>
-            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
-    }
-
-    <span class="hljs-keyword">if</span>(__update_delay_mem(lti_sys_handle, tmp_op_val))
-        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
-
-    *op = op_val;
-
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
 
 }
 
-<span class="hljs-keyword">int</span> LTI_Sys_Reset(LTI_Sys *lti_sys_handle) {
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Process</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">float</span> ip, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>op) {
 
-    lti_sys_handle-&gt;__delay_buffer_head_index = <span class="hljs-number">0</span>;
+    <span style="color: #333399; font-weight: bold">float</span> op_val <span style="color: #333333">=</span> ip, tmp_coeff <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>, tmp_op_val <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>;
 
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;delay_mem_size; ++i) {
-        lti_sys_handle-&gt;__delay_mem_buffer[i] = <span class="hljs-number">0.</span>;
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>N; <span style="color: #333333">++</span>i) {
+        <span style="color: #008800; font-weight: bold">if</span>(<span style="color: #333333">!</span>__get_delay_mem(lti_sys_handle,i, <span style="color: #333333">&amp;</span>tmp_coeff))
+            op_val <span style="color: #333333">+=</span> lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a[i] <span style="color: #333333">*</span> tmp_coeff;
+        <span style="color: #008800; font-weight: bold">else</span>
+            <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
     }
 
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;N; ++i) {
-        lti_sys_handle-&gt;coeff_buffer_a[i] = <span class="hljs-number">0.</span>;
+    tmp_op_val <span style="color: #333333">=</span> op_val;
+
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>M; <span style="color: #333333">++</span>i) {
+        <span style="color: #008800; font-weight: bold">if</span>(i <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+            op_val <span style="color: #333333">=</span> lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b[i] <span style="color: #333333">*</span> op_val;
+        <span style="color: #008800; font-weight: bold">else</span> <span style="color: #008800; font-weight: bold">if</span>(<span style="color: #333333">!</span>__get_delay_mem(lti_sys_handle, i, <span style="color: #333333">&amp;</span>tmp_coeff))
+            op_val <span style="color: #333333">+=</span> lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b[i] <span style="color: #333333">*</span> tmp_coeff;
+        <span style="color: #008800; font-weight: bold">else</span>
+            <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
     }
 
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; lti_sys_handle-&gt;M; ++i) {
-        lti_sys_handle-&gt;coeff_buffer_b[i] = <span class="hljs-number">0.</span>;
-    }
+    <span style="color: #008800; font-weight: bold">if</span>(__update_delay_mem(lti_sys_handle, tmp_op_val))
+        <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
 
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span style="color: #333333">*</span>op <span style="color: #333333">=</span> op_val;
+
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
 
 }
 
-<span class="hljs-keyword">int</span> LTI_Sys_Free(LTI_Sys *lti_sys_handle) {
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Reset</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle) {
+
+    lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_buffer_head_index <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size; <span style="color: #333333">++</span>i) {
+        lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer[i] <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>;
+    }
+
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>N; <span style="color: #333333">++</span>i) {
+        lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a[i] <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>;
+    }
+
+    <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>M; <span style="color: #333333">++</span>i) {
+        lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b[i] <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>;
+    }
+
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+}
+
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">LTI_Sys_Free</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle) {
 
     LTI_Sys_Reset(lti_sys_handle);
 
-    free(lti_sys_handle-&gt;__delay_mem_buffer);
-    free(lti_sys_handle-&gt;coeff_buffer_a);
-    free(lti_sys_handle-&gt;coeff_buffer_b);
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    free(lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer);
+    free(lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a);
+    free(lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b);
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
 
 }
 
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __get_delay_mem(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">float</span> *op_val) {
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">__get_delay_mem</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">int</span> index, <span style="color: #333399; font-weight: bold">float</span> <span style="color: #333333">*</span>op_val) {
 
-    *op_val = lti_sys_handle-&gt;__delay_mem_buffer[(index + lti_sys_handle-&gt;__delay_buffer_head_index) % lti_sys_handle-&gt;delay_mem_size];
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-
-}
-
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __update_delay_mem(LTI_Sys *lti_sys_handle, <span class="hljs-keyword">float</span> data_value) {
-
-    <span class="hljs-keyword">if</span>(lti_sys_handle-&gt;__delay_buffer_head_index == <span class="hljs-number">0</span>)
-        lti_sys_handle-&gt;__delay_buffer_head_index = lti_sys_handle-&gt;delay_mem_size - <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">else</span>
-        lti_sys_handle-&gt;__delay_buffer_head_index -= <span class="hljs-number">1</span>;
-
-    lti_sys_handle-&gt;__delay_mem_buffer[lti_sys_handle-&gt;__delay_buffer_head_index] = data_value;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span style="color: #333333">*</span>op_val <span style="color: #333333">=</span> lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer[(index <span style="color: #333333">+</span> lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_buffer_head_index) <span style="color: #333333">%</span> lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size];
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
 
 }
-</code></pre>
 
-    <h2>Example</h2>
-    Example Implementation of moving average filter: <a href="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/src/lti.c?raw=true">lti.c</a>, <a href="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/src/lti.h?raw=true">lti.h</a>
+<span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">__update_delay_mem</span>(LTI_Sys <span style="color: #333333">*</span>lti_sys_handle, <span style="color: #333399; font-weight: bold">float</span> data_value) {
 
-    <h2>References</h2>
-    <ul>
-        <li>Digital Signal Processing: Principles, Algorithms, and Applications,
-            <i>Book by Dimitris Manolakis and John G Proakis</i></li>
-        <li>Discrete-time Signal Processing,
-                <i>Book by Alan V. Oppenheim and Ronald W. Schafer</i>s</li>
-    </ul>
+    <span style="color: #008800; font-weight: bold">if</span>(lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_buffer_head_index <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span>)
+        lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_buffer_head_index <span style="color: #333333">=</span> lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size <span style="color: #333333">-</span> <span style="color: #0000DD; font-weight: bold">1</span>;
+    <span style="color: #008800; font-weight: bold">else</span>
+        lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_buffer_head_index <span style="color: #333333">-=</span> <span style="color: #0000DD; font-weight: bold">1</span>;
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer[lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_buffer_head_index] <span style="color: #333333">=</span> data_value;
+    <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+
+}
+</pre>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+        <h2>Example</h2>
+        Example Implementation of moving average filter: <a
+            href="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/src/lti.c?raw=true">lti.c</a>,
+        <a href="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/src/lti.h?raw=true">lti.h</a>
+
+        <h2>References</h2>
+        <ul>
+            <li>Digital Signal Processing: Principles, Algorithms, and Applications,
+                <i>Book by Dimitris Manolakis and John G Proakis</i>
+            </li>
+            <li>Discrete-time Signal Processing,
+                <i>Book by Alan V. Oppenheim and Ronald W. Schafer</i>s
+            </li>
+        </ul>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 
     </div>
 
