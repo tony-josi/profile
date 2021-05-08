@@ -52,11 +52,11 @@
                     (FIR)</strong></a>
             filters are those filters that have a fixed number of non zero output values when given an impulse signal as
             input.
-            Compared to the Infinite  impulse  response filters, FIRs are phase linear and uses convolution instead of
+            Compared to the Infinite impulse response filters, FIRs are phase linear and uses convolution instead of
             recursion.
             Using <a href="https://www.dspguide.com/ch6/2.htm"><strong>Convolution</strong></a> the output signal is
             obtained as
-            the convolution of the input signal and the impulse  response <a
+            the convolution of the input signal and the impulse response <a
                 href="https://www.dspguide.com/ch6/2.htm">[more]</a>. <a
                 href="https://en.wikipedia.org/wiki/Impulse_response"><strong> impulse response</strong></a> of a filter
             is
@@ -67,9 +67,10 @@
             analysing
             the response produced by the filter (of any window size, say N) when an impulsesignal is passed through it.
             <strong>Since
-            the impulse function contains all frequencies, the impulse response defines the response of a linear
-            time-invariant
-            system for all frequencies</strong> <a href="https://en.wikipedia.org/wiki/Impulse_response">[more]</a>. The impulse
+                the impulse function contains all frequencies, the impulse response defines the response of a linear
+                time-invariant
+                system for all frequencies</strong> <a href="https://en.wikipedia.org/wiki/Impulse_response">[more]</a>.
+            The impulse
             response
             of MA Filter will look like a &quot;box&quot; as the average (window size N) of impulse amplitude is taken
             as
@@ -80,13 +81,15 @@
             input signal. The <a href="https://en.wikipedia.org/wiki/Discrete-time_Fourier_transform"><strong>Discrete
                     Time
                     Fourier Transform (DTFT)</strong></a> of the output signal of the filter reveals the frequency
-            characteristics of the filter (Frequency response).</p>
+            characteristics of the filter (Frequency response).
+        </p>
         <p>To find the cut off frequency of a filter of Window size N, equate the frequency response function of the
             filter
             at
             cut-off frequency to 1/sqrt(2) (ie, -3 dB); as the <strong>cut-off frequency</strong> is regarded as the
             frequency
-            at which the filter <strong>reduces the amplitude of the input signal</strong> by 1/sqrt(2) [-3 dB]. That means
+            at which the filter <strong>reduces the amplitude of the input signal</strong> by 1/sqrt(2) [-3 dB]. That
+            means
             if a
             signal of frequency equal to cut-off frequency enters the filter, then the filter reduces the amplitude of
             the
@@ -113,7 +116,8 @@
                 </tr>
             </tbody>
         </table>
-        <p>The above image (right) shows the response of an impulse signal at 40, through an FIR LPF filter of window size
+        <p>The above image (right) shows the response of an impulse signal at 40, through an FIR LPF filter of window
+            size
             9.
         </p>
         <p>If <strong>N</strong> is the window size of the LPF filter, then the impulse response of the filter can be
@@ -166,7 +170,8 @@
         </p>
         <p>As we are only interested in the magnitude of the filter response and not it's phase, we can leave out the
             exponents
-            from the above equation and use the remaining part for the analysis of frequency response (the exponent part is the eigenvector and its phase of the LTI system),</p>
+            from the above equation and use the remaining part for the analysis of frequency response (the exponent part
+            is the eigenvector and its phase of the LTI system),</p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_7.png?raw=true"
                 alt="1">
         </p>
@@ -203,7 +208,8 @@
             the above equation by replacing the constant with a variable <code>a</code>; </p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_15.png?raw=true"
                 alt="1"> </p>
-        <p>and substituting it in the frequency response and equating it to 1/sqrt(2) when limit N tends to infinity,</p>
+        <p>and substituting it in the frequency response and equating it to 1/sqrt(2) when limit N tends to infinity,
+        </p>
         <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/FIR_LPF_Filter/res/dtft_12.png?raw=true"
                 alt="1"></p>
         <p>the above limit leads to,</p>
@@ -237,67 +243,150 @@
         <p>where fs is the sampling frequency.</p>
         <h3 id="fir-lpf-filter-implemented-in-software">FIR LPF Filter Implemented in Software</h3>
         <p>The below C++ code snippet implements an FIR LPF filter using the simple moving average approach:</p>
-        <pre><code class="lang-C++"><span class="hljs-keyword">class</span> fir_lpf_MA_Filter {
 
-    <span class="hljs-keyword">private</span>:
-        <span class="hljs-keyword">int</span>         moving_Avg_Length;
-        <span class="hljs-keyword">double</span>      lpf_Sum;
-        <span class="hljs-keyword">double</span>     *data_Buffer;
-        <span class="hljs-keyword">int</span>         buffer_NotFilled;
-        <span class="hljs-keyword">int</span>         data_Buffer_Cur_Length;
+        <!-- HTML generated using hilite.me -->
+        <div
+            style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+            <table>
+                <tr>
+                    <td>
+                        <pre style="margin: 0; line-height: 125%"> 1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+   10
+   11
+   12
+   13
+   14
+   15
+   16
+   17
+   18
+   19
+   20
+   21
+   22
+   23
+   24
+   25
+   26
+   27
+   28
+   29
+   30
+   31
+   32
+   33
+   34
+   35
+   36
+   37
+   38
+   39
+   40
+   41
+   42
+   43
+   44
+   45
+   46
+   47
+   48
+   49
+   50
+   51
+   52
+   53
+   54
+   55
+   56
+   57
+   58
+   59
+   60
+   61
+   62
+   63
+   64</pre>
+                    </td>
+                    <td>
+                        <pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">fir_lpf_MA_Filter</span> {
+      
+          <span style="color: #997700; font-weight: bold">private:</span>
+              <span style="color: #333399; font-weight: bold">int</span>         moving_Avg_Length;
+              <span style="color: #333399; font-weight: bold">double</span>      lpf_Sum;
+              <span style="color: #333399; font-weight: bold">double</span>     <span style="color: #333333">*</span>data_Buffer;
+              <span style="color: #333399; font-weight: bold">int</span>         buffer_NotFilled;
+              <span style="color: #333399; font-weight: bold">int</span>         data_Buffer_Cur_Length;
+      
+          <span style="color: #997700; font-weight: bold">public:</span>
+              fir_lpf_MA_Filter(<span style="color: #333399; font-weight: bold">double</span> cut_Off_Freq, <span style="color: #333399; font-weight: bold">double</span> sampling_Freq);
+              <span style="color: #333399; font-weight: bold">double</span> <span style="color: #0066BB; font-weight: bold">fir_lpf_MA_Filter_Process</span>(<span style="color: #333399; font-weight: bold">double</span> data);
+              <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">fir_lpf_MA_Filter_Reset</span>();
+              <span style="color: #333333">~</span>fir_lpf_MA_Filter();
+      
+              fir_lpf_MA_Filter(<span style="color: #008800; font-weight: bold">const</span> fir_lpf_MA_Filter <span style="color: #333333">&amp;</span>copy) <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">delete</span>;
+              fir_lpf_MA_Filter <span style="color: #008800; font-weight: bold">operator</span><span style="color: #333333">=</span>(<span style="color: #008800; font-weight: bold">const</span> fir_lpf_MA_Filter <span style="color: #333333">&amp;</span>copy) <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">delete</span>;
+              fir_lpf_MA_Filter(fir_lpf_MA_Filter <span style="color: #333333">&amp;&amp;</span>copy) <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">delete</span>;
+              fir_lpf_MA_Filter <span style="color: #008800; font-weight: bold">operator</span><span style="color: #333333">=</span>(fir_lpf_MA_Filter <span style="color: #333333">&amp;&amp;</span>copy) <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">delete</span>;
+      
+      };
+   
+   fir_lpf_MA_Filter<span style="color: #333333">::</span>fir_lpf_MA_Filter(<span style="color: #333399; font-weight: bold">double</span> cut_Off_Freq, <span style="color: #333399; font-weight: bold">double</span> sampling_Freq) {
+       
+       <span style="color: #008800; font-weight: bold">auto</span> fCut_Off <span style="color: #333333">=</span> cut_Off_Freq <span style="color: #333333">/</span> sampling_Freq;
+       <span style="color: #008800; font-weight: bold">auto</span> temp_bs <span style="color: #333333">=</span> fCut_Off <span style="color: #333333">*</span> fCut_Off;
+       <span style="color: #333399; font-weight: bold">int</span> calc_window_size <span style="color: #333333">=</span> sqrt(<span style="color: #6600EE; font-weight: bold">0.196202</span> <span style="color: #333333">+</span> temp_bs) <span style="color: #333333">/</span> fCut_Off;
+   
+       std<span style="color: #333333">::</span>cout<span style="color: #333333">&lt;&lt;</span><span style="background-color: #fff0f0">&quot;Calc. win size: &quot;</span><span style="color: #333333">&lt;&lt;</span>calc_window_size<span style="color: #333333">&lt;&lt;</span><span style="background-color: #fff0f0">&quot;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span>;
+   
+       moving_Avg_Length <span style="color: #333333">=</span> calc_window_size <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span>;
+       data_Buffer <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> <span style="color: #333399; font-weight: bold">double</span>[moving_Avg_Length]();
+       data_Buffer_Cur_Length <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+       lpf_Sum <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+       buffer_NotFilled <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1</span>;
+   
+   }
+   
+   fir_lpf_MA_Filter<span style="color: #333333">::~</span>fir_lpf_MA_Filter() {
+   
+       <span style="color: #008800; font-weight: bold">delete</span>[] data_Buffer;
+   
+   }
+   
+   <span style="color: #333399; font-weight: bold">double</span> fir_lpf_MA_Filter<span style="color: #333333">::</span>fir_lpf_MA_Filter_Process(<span style="color: #333399; font-weight: bold">double</span> data) {
+   
+       lpf_Sum <span style="color: #333333">+=</span> data;
+       data_Buffer[data_Buffer_Cur_Length] <span style="color: #333333">=</span> data;
+       <span style="color: #008800; font-weight: bold">if</span>(<span style="color: #333333">++</span>data_Buffer_Cur_Length <span style="color: #333333">==</span> moving_Avg_Length) {
+           data_Buffer_Cur_Length <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+           buffer_NotFilled <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+       } 
+       lpf_Sum <span style="color: #333333">-=</span> data_Buffer[data_Buffer_Cur_Length];
+       <span style="color: #008800; font-weight: bold">return</span> buffer_NotFilled <span style="color: #333333">?</span> lpf_Sum <span style="color: #333333">/</span> data_Buffer_Cur_Length <span style="color: #333333">:</span> lpf_Sum <span style="color: #333333">/</span> (moving_Avg_Length <span style="color: #333333">-</span> <span style="color: #0000DD; font-weight: bold">1</span>);
+   
+   }
+   
+   <span style="color: #333399; font-weight: bold">void</span> fir_lpf_MA_Filter<span style="color: #333333">::</span>fir_lpf_MA_Filter_Reset() {
+   
+       std<span style="color: #333333">::</span>fill_n(data_Buffer, moving_Avg_Length, <span style="color: #6600EE; font-weight: bold">0.0</span>);
+       buffer_NotFilled <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+       data_Buffer_Cur_Length <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+   
+   }
+   </pre>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    <span class="hljs-keyword">public</span>:
-        fir_lpf_MA_Filter(<span class="hljs-keyword">double</span> cut_Off_Freq, <span class="hljs-keyword">double</span> sampling_Freq);
-        <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">fir_lpf_MA_Filter_Process</span><span class="hljs-params">(<span class="hljs-keyword">double</span> data)</span></span>;
-        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fir_lpf_MA_Filter_Reset</span><span class="hljs-params">()</span></span>;
-        ~fir_lpf_MA_Filter();
 
-        fir_lpf_MA_Filter(<span class="hljs-keyword">const</span> fir_lpf_MA_Filter &amp;copy) = <span class="hljs-keyword">delete</span>;
-        fir_lpf_MA_Filter <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> fir_lpf_MA_Filter &amp;copy) = <span class="hljs-keyword">delete</span>;
-        fir_lpf_MA_Filter(fir_lpf_MA_Filter &amp;&amp;copy) = <span class="hljs-keyword">delete</span>;
-        fir_lpf_MA_Filter <span class="hljs-keyword">operator</span>=(fir_lpf_MA_Filter &amp;&amp;copy) = <span class="hljs-keyword">delete</span>;
-
-};
-
-fir_lpf_MA_Filter::fir_lpf_MA_Filter(<span class="hljs-keyword">double</span> cut_Off_Freq, <span class="hljs-keyword">double</span> sampling_Freq) {
-
-    <span class="hljs-keyword">auto</span> fCut_Off = cut_Off_Freq / sampling_Freq;
-    <span class="hljs-keyword">auto</span> temp_bs = fCut_Off * fCut_Off;
-    moving_Avg_Length = <span class="hljs-built_in">sqrt</span>(<span class="hljs-number">0.196202</span> + temp_bs) / fCut_Off;
-    data_Buffer = <span class="hljs-keyword">new</span> <span class="hljs-keyword">double</span>[moving_Avg_Length]();
-    data_Buffer_Cur_Length = <span class="hljs-number">0</span>;
-    lpf_Sum = <span class="hljs-number">0</span>;
-    buffer_NotFilled = <span class="hljs-number">1</span>;
-
-}
-
-fir_lpf_MA_Filter::~fir_lpf_MA_Filter() {
-
-    <span class="hljs-keyword">delete</span>[] data_Buffer;
-
-}
-
-<span class="hljs-keyword">double</span> fir_lpf_MA_Filter::fir_lpf_MA_Filter_Process(<span class="hljs-keyword">double</span> data) {
-
-    lpf_Sum += data;
-    data_Buffer[data_Buffer_Cur_Length] = data;
-    <span class="hljs-keyword">if</span>(++data_Buffer_Cur_Length == moving_Avg_Length) {
-        data_Buffer_Cur_Length = <span class="hljs-number">0</span>;
-        buffer_NotFilled = <span class="hljs-number">0</span>;
-    } 
-    lpf_Sum -= data_Buffer[data_Buffer_Cur_Length];
-    <span class="hljs-keyword">return</span> buffer_NotFilled ? lpf_Sum / data_Buffer_Cur_Length : lpf_Sum / moving_Avg_Length;
-
-}
-
-<span class="hljs-keyword">void</span> fir_lpf_MA_Filter::fir_lpf_MA_Filter_Reset() {
-
-    <span class="hljs-built_in">std</span>::fill_n(data_Buffer, moving_Avg_Length, <span class="hljs-number">0.0</span>);
-    buffer_NotFilled = <span class="hljs-number">0</span>;
-    data_Buffer_Cur_Length = <span class="hljs-number">0</span>;
-
-}
-</code></pre>
         <h3 id="examples">Examples</h3>
         <p>The following example shows an unfiltered input signal (left) having 2 frequencies: 1 error signal at 1.2 Hz
             and
