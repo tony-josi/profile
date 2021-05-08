@@ -247,10 +247,16 @@
 174
 175
 176
-177</pre>
+177
+178
+179
+180</pre>
                     </td>
                     <td>
                         <pre style="margin: 0; line-height: 125%"><span style="color: #557799">#include &lt;stdlib.h&gt;</span>
+
+<span style="color: #557799">#include &lt;math.h&gt;</span>
+<span style="color: #557799">#include &lt;stdio.h&gt;</span>
 
 <span style="color: #008800; font-weight: bold">typedef</span> <span style="color: #008800; font-weight: bold">struct</span> _lti_sys {
 
@@ -278,7 +284,7 @@
         <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
 
     lti_sys_handle<span style="color: #333333">-&gt;</span>delay_mem_size <span style="color: #333333">=</span> M <span style="color: #333333">&gt;=</span> N <span style="color: #333333">?</span> M <span style="color: #333333">:</span> N;
-    lti_sys_handle<span style="color: #333333">-&gt;</span>M <span style="color: #333333">=</span> M;
+    lti_sys_handle<span style="color: #333333">-&gt;</span>M <span style="color: #333333">=</span> M <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span>;
     lti_sys_handle<span style="color: #333333">-&gt;</span>N <span style="color: #333333">=</span> N;
     lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_buffer_head_index <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
     lti_sys_handle<span style="color: #333333">-&gt;</span>__delay_mem_buffer <span style="color: #333333">=</span> <span style="color: #007020">NULL</span>;
@@ -352,7 +358,7 @@
     <span style="color: #333399; font-weight: bold">float</span> op_val <span style="color: #333333">=</span> ip, tmp_coeff <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>, tmp_op_val <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.</span>;
 
     <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>N; <span style="color: #333333">++</span>i) {
-        <span style="color: #008800; font-weight: bold">if</span>(<span style="color: #333333">!</span>__get_delay_mem(lti_sys_handle,i, <span style="color: #333333">&amp;</span>tmp_coeff))
+        <span style="color: #008800; font-weight: bold">if</span>(<span style="color: #333333">!</span>__get_delay_mem(lti_sys_handle, i, <span style="color: #333333">&amp;</span>tmp_coeff))
             op_val <span style="color: #333333">+=</span> lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_a[i] <span style="color: #333333">*</span> tmp_coeff;
         <span style="color: #008800; font-weight: bold">else</span>
             <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
@@ -363,7 +369,7 @@
     <span style="color: #008800; font-weight: bold">for</span>(<span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>; i <span style="color: #333333">&lt;</span> lti_sys_handle<span style="color: #333333">-&gt;</span>M; <span style="color: #333333">++</span>i) {
         <span style="color: #008800; font-weight: bold">if</span>(i <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span>)
             op_val <span style="color: #333333">=</span> lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b[i] <span style="color: #333333">*</span> op_val;
-        <span style="color: #008800; font-weight: bold">else</span> <span style="color: #008800; font-weight: bold">if</span>(<span style="color: #333333">!</span>__get_delay_mem(lti_sys_handle, i, <span style="color: #333333">&amp;</span>tmp_coeff))
+        <span style="color: #008800; font-weight: bold">else</span> <span style="color: #008800; font-weight: bold">if</span>(<span style="color: #333333">!</span>__get_delay_mem(lti_sys_handle, i <span style="color: #333333">-</span> <span style="color: #0000DD; font-weight: bold">1</span>, <span style="color: #333333">&amp;</span>tmp_coeff))
             op_val <span style="color: #333333">+=</span> lti_sys_handle<span style="color: #333333">-&gt;</span>coeff_buffer_b[i] <span style="color: #333333">*</span> tmp_coeff;
         <span style="color: #008800; font-weight: bold">else</span>
             <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span>;
@@ -432,6 +438,7 @@
                 </tr>
             </table>
         </div>
+
 
 
 
