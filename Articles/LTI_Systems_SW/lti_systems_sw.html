@@ -13,19 +13,15 @@
 <body>
     <div style="padding-left: 60px; padding-right: 60px;">
 
-        <h1 id="sw-implementatoin-of-any-lti-system-from-its-constant-coefficient-difference-equation">Software
-            Implementation
-            of LTI System from its Constant-Coefficient Difference Equation</h1>
-        <b><em><i> By Tony Josi</i></em></b>
+        <h1 id="software-implementation-of-lti-system-from-its-constant-coefficient-difference-equation">Software
+            Implementation of LTI System from its Constant-Coefficient Difference Equation</h1>
         <p>A <strong><a href="https://en.wikipedia.org/wiki/Linear_time-invariant_system">Linear time-invariant
                     system</a></strong> is a system that obeys the following fundamental properties:</p>
         <ol>
-            <li><b>Linearity</b>: The input and output relationship of the system is based on linear differenctial
-                eqautions.
+            <li>Linearity: The input and output relationship of the system is based on linear differenctial eqautions.
                 If the system maps inputs x1(t) and x2(t) to outputs y1(t) and y2(t) respectively, then it will map
                 x3(t) = x1(t) + x2(t) to the output y3(t) where y3(t) = y1(t) + y2(t). (superposition principle)</li>
-            <li><b>Time invariance</b>: Time invariance means that the output of the system does not depend on the
-                particular
+            <li>Time invariance: Time invariance means that the output of the system does not depend on the particular
                 time the input is applied.</li>
         </ol>
         <p><strong>The fundamental result of the LTI system is that it can be characterized entirely by the systems
@@ -35,34 +31,33 @@
             response or vice versa. </p>
         <p>This article aims at developing a simple software library that can realise any LTI system from its
             Constant-Coefficient Difference Equation defined as: </p>
-        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/1.png?raw=true"
-                alt="1"></p>
-
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/1.png?raw=true" alt="3">
+        </p>
+        <p>The above equation can be represented using the following diagram (Direct 1 form):</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/direct_1.png?raw=true"
+                alt="3"></p>
+        <p>Non-Recursive System,</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/2.png?raw=true" alt="3">
+        </p>
+        <p>Recursive System,</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/3.png?raw=true" alt="3">
+        </p>
         <p>If the recursive and non-recursive part of the above general Constant-Coefficient Difference Equation is
             interchanged the overall system response remains the same as the convolution of two impulse response is
             commutative.</p>
+        <p>Thus the direct 1 form can be changed into direct 2 form:</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/direct2.png?raw=true"
+                alt="3"></p>
+        <p>Thus, recursive System,</p>
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/4.png?raw=true" alt="3">
+        </p>
         <p>Non-Recursive System,</p>
-        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/2.png?raw=true"
-                alt="1"></p>
-
-        <p>Recursive System,</p>
-        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/3.png?raw=true"
-                alt="1"></p>
-
-        <p>The above order of the system can be interchnages without changing the system response as,</p>
-        <p>Recursive System,</p>
-        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/4.png?raw=true"
-                alt="1"></p>
-
-        <p>Non-Recursive System,</p>
-        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/5.png?raw=true"
-                alt="1"></p>
-
+        <p><img src="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/res/5.png?raw=true" alt="3">
+        </p>
         <p>The above form reduces the number of delays (memory) required to implement the system. (No. of delays =
             max{M, N} delays.)</p>
         <p>The following code snippet implements the above form of LTI System that can be configured depending upon the
             difference equation of the system.</p>
-
 
 
         <!-- HTML generated using hilite.me -->
@@ -251,9 +246,9 @@
 178
 179
 180</pre>
-                    </td>
-                    <td>
-                        <pre style="margin: 0; line-height: 125%"><span style="color: #557799">#include &lt;stdlib.h&gt;</span>
+        </td>
+        <td>
+            <pre style="margin: 0; line-height: 125%"><span style="color: #557799">#include &lt;stdlib.h&gt;</span>
 
 <span style="color: #557799">#include &lt;math.h&gt;</span>
 <span style="color: #557799">#include &lt;stdio.h&gt;</span>
@@ -434,34 +429,34 @@
 
 }
 </pre>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        </td>
+        </tr>
+        </table>
+    </div>
 
 
 
 
-        <h2>Example</h2>
-        Example Implementation of moving average filter: <a
-            href="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/src/lti.c?raw=true">lti.c</a>,
-        <a href="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/src/lti.h?raw=true">lti.h</a>
+    <h2>Example</h2>
+    Example Implementation of moving average filter: <a
+        href="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/src/lti.c?raw=true">lti.c</a>,
+    <a href="https://github.com/TonyJosi97/profile/blob/master/Articles/LTI_Systems_SW/src/lti.h?raw=true">lti.h</a>
 
-        <h2>References</h2>
-        <ul>
-            <li>Digital Signal Processing: Principles, Algorithms, and Applications,
-                <i>Book by Dimitris Manolakis and John G Proakis</i>
-            </li>
-            <li>Discrete-time Signal Processing,
-                <i>Book by Alan V. Oppenheim and Ronald W. Schafer</i>s
-            </li>
-        </ul>
+    <h2>References</h2>
+    <ul>
+        <li>Digital Signal Processing: Principles, Algorithms, and Applications,
+            <i>Book by Dimitris Manolakis and John G Proakis</i>
+        </li>
+        <li>Discrete-time Signal Processing,
+            <i>Book by Alan V. Oppenheim and Ronald W. Schafer</i>s
+        </li>
+    </ul>
 
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
     </div>
 
